@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whack-a-Mole Online - Free Reflex Game | iownchatgpt</title>
+  <meta name="description" content="Play a fast free Whack-a-Mole game in your browser. Hit as many moles as possible before time runs out.">
+  <meta name="keywords" content="whack a mole online,reflex game,free browser game,quick arcade game">
+  <meta name="author" content="iownchatgpt">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://iownchatgpt.com/whack-a-mole/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Whack-a-Mole Online - Free Reflex Game">
+  <meta property="og:description" content="Test your reflexes in this free browser Whack-a-Mole game.">
+  <meta property="og:url" content="https://iownchatgpt.com/whack-a-mole/">
+  <meta property="og:site_name" content="iownchatgpt">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Whack-a-Mole Online - Free Reflex Game">
+  <meta name="twitter:description" content="Hit as many moles as you can in 30 seconds.">
+
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Game",
+    "name": "Whack-a-Mole Online",
+    "url": "https://iownchatgpt.com/whack-a-mole/",
+    "description": "A browser-based reflex game where players hit moles for points.",
+    "gamePlatform": "Web Browser",
+    "applicationCategory": "Game"
+  }
+  </script>
+</head>
+<body>
+  <main class="container">
+    <header class="topbar">
+      <a href="../index.html" class="nav-link">Home</a>
+      <h1>Whack-a-Mole</h1>
+      <a href="../guides.html" class="nav-link">Guides</a>
+    </header>
+
+    <section class="hud" aria-label="Score and timer">
+      <p><strong>Score:</strong> <span id="score">0</span></p>
+      <p><strong>Time:</strong> <span id="time">30s</span></p>
+      <p><strong>Best:</strong> <span id="best">0</span></p>
+      <button id="startBtn" type="button">Start Round</button>
+    </section>
+
+    <section class="board" id="board" aria-label="Whack-a-Mole board"></section>
+
+    <section class="message" aria-live="polite">
+      <p id="status">Press Start Round to begin.</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pong Online - Free Arcade Game | iownchatgpt</title>
+  <meta name="description" content="Play Pong online for free against computer AI. First to 7 points wins.">
+  <meta name="keywords" content="pong online,free pong game,browser arcade game">
+  <meta name="author" content="iownchatgpt">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://iownchatgpt.com/pong/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pong Online - Free Arcade Game">
+  <meta property="og:description" content="Classic Pong in your browser. Play against AI and race to 7 points.">
+  <meta property="og:url" content="https://iownchatgpt.com/pong/">
+  <meta property="og:site_name" content="iownchatgpt">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Pong Online - Free Arcade Game">
+  <meta name="twitter:description" content="Classic browser Pong against computer AI.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="topbar">
+      <a href="../index.html">Home</a>
+      <h1>Pong</h1>
+      <a href="../guides.html">Guides</a>
+    </header>
+
+    <section class="hud">
+      <p><strong>You:</strong> <span id="playerScore">0</span></p>
+      <p><strong>CPU:</strong> <span id="cpuScore">0</span></p>
+      <button id="startBtn" type="button">Start Match</button>
+    </section>
+
+    <canvas id="pongCanvas" width="760" height="420"></canvas>
+    <p id="status" class="status">Use ↑ and ↓ to move paddle.</p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

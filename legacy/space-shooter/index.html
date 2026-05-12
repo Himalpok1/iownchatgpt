@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space Shooter Online - Free Browser Game | iownchatgpt</title>
+  <meta name="description" content="Play a fast space shooter in your browser. Dodge enemy fire, clear waves, and level up.">
+  <meta name="keywords" content="space shooter online,free browser shooting game,arcade shooter">
+  <meta name="author" content="iownchatgpt">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://iownchatgpt.com/space-shooter/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Space Shooter Online - Free Browser Game">
+  <meta property="og:description" content="Clear enemy waves and survive in this browser space shooter.">
+  <meta property="og:url" content="https://iownchatgpt.com/space-shooter/">
+  <meta property="og:site_name" content="iownchatgpt">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Space Shooter Online - Free Browser Game">
+  <meta name="twitter:description" content="Dodge and shoot your way through enemy waves.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="topbar">
+      <a href="../index.html">Home</a>
+      <h1>Space Shooter</h1>
+      <a href="../guides.html">Guides</a>
+    </header>
+
+    <section class="hud">
+      <p><strong>Score:</strong> <span id="score">0</span></p>
+      <p><strong>Lives:</strong> <span id="lives">3</span></p>
+      <p><strong>Level:</strong> <span id="level">1</span></p>
+      <button id="startBtn" type="button">Start / Restart</button>
+    </section>
+
+    <canvas id="shooterCanvas" width="760" height="500"></canvas>
+    <p id="status" class="status">Move: A/D or arrows. Shoot: space.</p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

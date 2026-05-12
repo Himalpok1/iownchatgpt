@@ -1,0 +1,202 @@
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --text: #f5f5f5;
+  --muted: #a7a9a9;
+  --primary: #00e5ff;
+  --accent: #8a2be2;
+  --border: rgba(255, 255, 255, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+}
+
+a {
+  color: var(--primary);
+}
+
+a:hover {
+  opacity: 0.9;
+}
+
+.container {
+  width: min(1080px, 92%);
+  margin: 0 auto;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  background: rgba(13, 17, 23, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+}
+
+.nav-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+}
+
+.brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.menu {
+  display: flex;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu a {
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.menu a:hover,
+.menu a.active {
+  color: var(--primary);
+}
+
+.hero {
+  padding: 64px 0 28px;
+}
+
+.hero h1 {
+  margin: 0 0 12px;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1.25;
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 760px;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.badge {
+  background: rgba(0, 229, 255, 0.12);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  color: var(--primary);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  margin-bottom: 56px;
+}
+
+.article-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px;
+}
+
+.article-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.4rem;
+}
+
+.article-card p {
+  margin: 0 0 12px;
+}
+
+.article-card ul,
+.article-card ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.article-card li {
+  margin-bottom: 8px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 56px;
+}
+
+.post-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.post-card h3 {
+  margin: 10px 0;
+  font-size: 1.1rem;
+}
+
+.post-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 0 48px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.breadcrumb {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.breadcrumb a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+@media (max-width: 760px) {
+  .menu {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .article-card {
+    padding: 20px;
+  }
+}

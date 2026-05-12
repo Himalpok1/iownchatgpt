@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minesweeper Online - Free Browser Puzzle | iownchatgpt</title>
+  <meta name="description" content="Play Minesweeper online for free. Flag mines, reveal safe cells, and clear the board.">
+  <meta name="keywords" content="minesweeper online,free minesweeper,browser puzzle game">
+  <meta name="author" content="iownchatgpt">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://iownchatgpt.com/minesweeper/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Minesweeper Online - Free Browser Puzzle">
+  <meta property="og:description" content="Classic Minesweeper with flags, timer, and reset controls.">
+  <meta property="og:url" content="https://iownchatgpt.com/minesweeper/">
+  <meta property="og:site_name" content="iownchatgpt">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Minesweeper Online - Free Browser Puzzle">
+  <meta name="twitter:description" content="Find safe cells and avoid mines in this free browser game.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="topbar">
+      <a href="../index.html">Home</a>
+      <h1>Minesweeper</h1>
+      <a href="../guides.html">Guides</a>
+    </header>
+
+    <section class="hud">
+      <p><strong>Mines:</strong> <span id="minesLeft">15</span></p>
+      <p><strong>Time:</strong> <span id="time">0s</span></p>
+      <button id="resetBtn" type="button">New Game</button>
+    </section>
+
+    <section class="board" id="board"></section>
+    <p id="status" class="status">Left-click to reveal. Right-click to flag.</p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

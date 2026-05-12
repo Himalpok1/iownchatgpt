@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-00RR0835VF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-00RR0835VF');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird Browser Game - Play Free Online | iownchatgpt</title>
+    <meta name="description" content="Play Flappy Bird online for free in your browser. Tap to fly, avoid pipes, and beat your high score on desktop or mobile.">
+    <meta name="keywords" content="flappy bird online,flappy bird browser game,play flappy bird free,high score game">
+    <meta name="author" content="iownchatgpt">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <link rel="canonical" href="https://iownchatgpt.com/flappybird/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Flappy Bird Browser Game - Play Free Online">
+    <meta property="og:description" content="Play Flappy Bird online in your browser. Beat your high score on desktop or mobile.">
+    <meta property="og:url" content="https://iownchatgpt.com/flappybird/">
+    <meta property="og:site_name" content="iownchatgpt">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Flappy Bird Browser Game - Play Free Online">
+    <meta name="twitter:description" content="Play Flappy Bird online for free. Tap, fly, and beat your high score.">
+    <style>
+        :root {
+            --color-bird: #FFD700;
+            --color-pipe: #00AA00;
+            --color-sky: #87CEEB;
+            --color-ground: #8B7355;
+            --color-text: #000000;
+            --color-white: #ffffff;
+            --color-overlay: rgba(0, 0, 0, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--color-sky);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #gameContainer {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 600px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        #gameCanvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: var(--color-sky);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-overlay);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            z-index: 10;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        h1 {
+            color: var(--color-white);
+            font-size: 42px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            color: var(--color-white);
+            font-size: 32px;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .score-display {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--color-text);
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .high-score {
+            color: #FF6B6B;
+        }
+
+        .new-record {
+            color: #FFD700;
+            font-size: 20px;
+            margin: 10px 0;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--color-white);
+            border: none;
+            padding: 15px 35px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        #currentScore {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--color-text);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            z-index: 5;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #shareModal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 20;
+            max-width: 90%;
+            width: 350px;
+        }
+
+        #shareModal h3 {
+            color: var(--color-text);
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        #shareModal p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        #shareModal .button-group {
+            flex-direction: row;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        #shareModal .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 15;
+        }
+
+        .instructions {
+            color: var(--color-white);
+            font-size: 16px;
+            margin-top: 10px;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 450px) {
+            #gameContainer {
+                height: 100vh;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="400" height="600"></canvas>
+        
+        <div id="currentScore" class="hidden">0</div>
+        
+        <div id="startScreen" class="overlay">
+            <h1>🐦 Flappy Bird</h1>
+            <div class="score-display">
+                High Score: <span class="high-score" id="startHighScore">0</span>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-primary" id="startBtn">Start Game</button>
+                <button class="btn btn-secondary" id="shareStartBtn">Share</button>
+            </div>
+            <p class="instructions">Click or press SPACE to flap</p>
+        </div>
+        
+        <div id="gameOverScreen" class="overlay hidden">
+            <h2>Game Over!</h2>
+            <div class="score-display">
+                Score: <span id="finalScore">0</span>
+            </div>
+            <div class="score-display">
+                High Score: <span class="high-score" id="gameOverHighScore">0</span>
+            </div>
+            <p class="new-record hidden" id="newRecordMsg">🎉 New High Score! 🎉</p>
+            <div class="button-group">
+                <button class="btn btn-primary" id="playAgainBtn">Play Again</button>
+                <button class="btn btn-secondary" id="shareGameOverBtn">Share</button>
+            </div>
+        </div>
+        
+        <div id="shareModalOverlay" class="modal-overlay hidden"></div>
+        <div id="shareModal" class="hidden">
+            <h3>Share Your Score</h3>
+            <p id="shareText"></p>
+            <div class="button-group">
+                <button class="btn btn-secondary" id="copyBtn">Copy</button>
+                <button class="btn" id="closeModalBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Device Detection
+        function isMobileDevice() {
+            // Check for touch support and small screen size
+            const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            const smallScreen = window.innerWidth <= 768;
+            const mobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            return (hasTouch && smallScreen) || mobileUserAgent;
+        }
+
+        // Game Configuration
+        const isMobile = isMobileDevice();
+        const CONFIG = {
+            birdSize: 30,
+            gravity: isMobile ? 0.13 : 0.18,
+            jumpStrength: -6.5,
+            pipeWidth: 60,
+            pipeGap: 170,
+            pipeSpacing: 300,
+            gameSpeed: isMobile ? 1.9 : 2.3,
+            bounceAnimation: isMobile ? {
+                duration: 200,
+                scaleDown: 0.93,
+                scaleUp: 1.03
+            } : {
+                duration: 250,
+                scaleDown: 0.85,
+                scaleUp: 1.1
+            },
+            colors: {
+                bird: '#FFD700',
+                pipe: '#00AA00',
+                sky: '#87CEEB',
+                ground: '#8B7355',
+                text: '#000000'
+            }
+        };
+
+        // Game State
+        let gameState = {
+            highScore: 0,
+            currentScore: 0,
+            isPlaying: false,
+            bird: null,
+            pipes: [],
+            animationId: null,
+            lastFrameTime: 0,
+            deltaTime: 0
+        };
+
+        // Canvas Setup
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Bird Class
+        class Bird {
+            constructor() {
+                this.x = 80;
+                this.y = canvas.height / 2;
+                this.velocity = 0;
+                this.size = CONFIG.birdSize;
+                this.bounceScale = 1;
+                this.bounceAnimationTime = 0;
+            }
+
+            draw() {
+                // Update bounce animation
+                if (this.bounceAnimationTime > 0) {
+                    const progress = 1 - (this.bounceAnimationTime / CONFIG.bounceAnimation.duration);
+                    
+                    if (progress < 0.3) {
+                        // Compress phase (first 30% of animation)
+                        const compressProgress = progress / 0.3;
+                        this.bounceScale = 1 - (1 - CONFIG.bounceAnimation.scaleDown) * compressProgress;
+                    } else {
+                        // Expand phase (remaining 70% of animation)
+                        const expandProgress = (progress - 0.3) / 0.7;
+                        if (expandProgress < 0.5) {
+                            // Expand to scaleUp
+                            this.bounceScale = CONFIG.bounceAnimation.scaleDown + 
+                                (CONFIG.bounceAnimation.scaleUp - CONFIG.bounceAnimation.scaleDown) * (expandProgress / 0.5);
+                        } else {
+                            // Return to normal
+                            this.bounceScale = CONFIG.bounceAnimation.scaleUp - 
+                                (CONFIG.bounceAnimation.scaleUp - 1) * ((expandProgress - 0.5) / 0.5);
+                        }
+                    }
+                    
+                    this.bounceAnimationTime -= 16; // Approximate frame time
+                    if (this.bounceAnimationTime < 0) {
+                        this.bounceAnimationTime = 0;
+                        this.bounceScale = 1;
+                    }
+                } else {
+                    this.bounceScale = 1;
+                }
+                
+                // Save context and apply transformations
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.scale(this.bounceScale, this.bounceScale);
+                ctx.translate(-this.x, -this.y);
+                
+                // Draw bird
+                ctx.fillStyle = CONFIG.colors.bird;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size / 2, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Eye
+                ctx.fillStyle = '#000';
+                ctx.beginPath();
+                ctx.arc(this.x + 5, this.y - 5, 3, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Beak
+                ctx.fillStyle = '#FF6B6B';
+                ctx.beginPath();
+                ctx.moveTo(this.x + this.size / 2, this.y);
+                ctx.lineTo(this.x + this.size / 2 + 10, this.y - 3);
+                ctx.lineTo(this.x + this.size / 2 + 10, this.y + 3);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Restore context
+                ctx.restore();
+            }
+
+            update(deltaTime) {
+                // Frame rate independent physics
+                const dt = deltaTime / 16.67; // Normalize to 60fps (16.67ms per frame)
+                
+                this.velocity += CONFIG.gravity * dt;
+                this.y += this.velocity * dt;
+
+                // Ground collision
+                if (this.y + this.size / 2 >= canvas.height - 50) {
+                    this.y = canvas.height - 50 - this.size / 2;
+                    gameOver();
+                }
+
+                // Ceiling collision
+                if (this.y - this.size / 2 <= 0) {
+                    this.y = this.size / 2;
+                    gameOver();
+                }
+            }
+
+            flap() {
+                this.velocity = CONFIG.jumpStrength;
+                // Trigger bounce animation
+                this.bounceAnimationTime = CONFIG.bounceAnimation.duration;
+            }
+        }
+
+        // Pipe Class
+        class Pipe {
+            constructor(x) {
+                this.x = x;
+                this.width = CONFIG.pipeWidth;
+                this.gapY = Math.random() * (canvas.height - CONFIG.pipeGap - 150) + 75;
+                this.gapSize = CONFIG.pipeGap;
+                this.scored = false;
+            }
+
+            draw() {
+                // Top pipe
+                ctx.fillStyle = CONFIG.colors.pipe;
+                ctx.fillRect(this.x, 0, this.width, this.gapY);
+                
+                // Pipe cap
+                ctx.fillRect(this.x - 5, this.gapY - 20, this.width + 10, 20);
+                
+                // Bottom pipe
+                ctx.fillRect(this.x, this.gapY + this.gapSize, this.width, canvas.height - this.gapY - this.gapSize - 50);
+                
+                // Pipe cap
+                ctx.fillRect(this.x - 5, this.gapY + this.gapSize, this.width + 10, 20);
+                
+                // Pipe highlights
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.fillRect(this.x + 5, 0, 10, this.gapY - 20);
+                ctx.fillRect(this.x + 5, this.gapY + this.gapSize + 20, 10, canvas.height - this.gapY - this.gapSize - 70);
+            }
+
+            update(deltaTime) {
+                // Frame rate independent movement
+                const dt = deltaTime / 16.67; // Normalize to 60fps
+                this.x -= CONFIG.gameSpeed * dt;
+            }
+
+            checkCollision(bird) {
+                if (bird.x + bird.size / 2 > this.x && bird.x - bird.size / 2 < this.x + this.width) {
+                    if (bird.y - bird.size / 2 < this.gapY || bird.y + bird.size / 2 > this.gapY + this.gapSize) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            checkScore(bird) {
+                if (!this.scored && bird.x > this.x + this.width) {
+                    this.scored = true;
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        // Draw Ground
+        function drawGround() {
+            ctx.fillStyle = CONFIG.colors.ground;
+            ctx.fillRect(0, canvas.height - 50, canvas.width, 50);
+            
+            // Ground texture
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            for (let i = 0; i < canvas.width; i += 20) {
+                ctx.fillRect(i, canvas.height - 50, 10, 50);
+            }
+        }
+
+        // Draw Background
+        function drawBackground() {
+            // Sky gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, CONFIG.colors.sky);
+            gradient.addColorStop(1, '#e0f6ff');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height - 50);
+            
+            // Clouds
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.beginPath();
+            ctx.arc(100, 100, 30, 0, Math.PI * 2);
+            ctx.arc(130, 90, 40, 0, Math.PI * 2);
+            ctx.arc(160, 100, 30, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(250, 150, 25, 0, Math.PI * 2);
+            ctx.arc(275, 145, 35, 0, Math.PI * 2);
+            ctx.arc(300, 150, 25, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Game Loop
+        function gameLoop(currentTime) {
+            if (!gameState.isPlaying) return;
+
+            // Calculate delta time for frame rate independent physics
+            if (gameState.lastFrameTime === 0) {
+                gameState.lastFrameTime = currentTime;
+            }
+            gameState.deltaTime = currentTime - gameState.lastFrameTime;
+            gameState.lastFrameTime = currentTime;
+
+            // Cap delta time to prevent large jumps (e.g., when tab becomes inactive)
+            if (gameState.deltaTime > 100) {
+                gameState.deltaTime = 16.67; // Reset to ~60fps
+            }
+
+            // Clear and draw background
+            drawBackground();
+
+            // Update and draw bird
+            gameState.bird.update(gameState.deltaTime);
+            gameState.bird.draw();
+
+            // Update and draw pipes
+            gameState.pipes.forEach((pipe, index) => {
+                pipe.update(gameState.deltaTime);
+                pipe.draw();
+
+                // Check collision
+                if (pipe.checkCollision(gameState.bird)) {
+                    gameOver();
+                }
+
+                // Check score
+                if (pipe.checkScore(gameState.bird)) {
+                    gameState.currentScore++;
+                    updateScoreDisplay();
+                }
+
+                // Remove off-screen pipes
+                if (pipe.x + pipe.width < 0) {
+                    gameState.pipes.splice(index, 1);
+                }
+            });
+
+            // Add new pipes
+            if (gameState.pipes.length === 0 || gameState.pipes[gameState.pipes.length - 1].x < canvas.width - CONFIG.pipeSpacing) {
+                gameState.pipes.push(new Pipe(canvas.width));
+            }
+
+            // Draw ground
+            drawGround();
+
+            // Continue loop
+            gameState.animationId = requestAnimationFrame(gameLoop);
+        }
+
+        // Start Game
+        function startGame() {
+            gameState.isPlaying = true;
+            gameState.currentScore = 0;
+            gameState.lastFrameTime = 0;
+            gameState.deltaTime = 0;
+            gameState.bird = new Bird();
+            gameState.pipes = [new Pipe(canvas.width)];
+
+            // Hide start screen, show score
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('currentScore').classList.remove('hidden');
+            updateScoreDisplay();
+
+            // Start game loop
+            gameState.animationId = requestAnimationFrame(gameLoop);
+        }
+
+        // Game Over
+        function gameOver() {
+            if (!gameState.isPlaying) return;
+            
+            gameState.isPlaying = false;
+            cancelAnimationFrame(gameState.animationId);
+
+            // Update high score
+            if (gameState.currentScore > gameState.highScore) {
+                gameState.highScore = gameState.currentScore;
+                document.getElementById('newRecordMsg').classList.remove('hidden');
+            } else {
+                document.getElementById('newRecordMsg').classList.add('hidden');
+            }
+
+            // Update displays
+            document.getElementById('finalScore').textContent = gameState.currentScore;
+            document.getElementById('gameOverHighScore').textContent = gameState.highScore;
+            document.getElementById('currentScore').classList.add('hidden');
+            document.getElementById('gameOverScreen').classList.remove('hidden');
+        }
+
+        // Update Score Display
+        function updateScoreDisplay() {
+            document.getElementById('currentScore').textContent = gameState.currentScore;
+        }
+
+        // Reset Game
+        function resetGame() {
+            gameState.pipes = [];
+            document.getElementById('gameOverScreen').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+            document.getElementById('startHighScore').textContent = gameState.highScore;
+            
+            // Draw initial screen
+            drawBackground();
+            drawGround();
+        }
+
+        // Share Functions
+        function openShareModal(fromStart = false) {
+            const score = fromStart ? 0 : gameState.currentScore;
+            const highScore = gameState.highScore;
+            const gameLink = window.location.href;
+            let shareText;
+
+            if (fromStart) {
+                if (highScore > 0) {
+                    shareText = `I scored ${highScore} points in Flappy Bird! Can you beat my score? ${gameLink}`;
+                } else {
+                    shareText = `Join me in playing Flappy Bird! Let's see who can get the highest score! Play now: ${gameLink}`;
+                }
+            } else {
+                if (score === highScore && score > 0) {
+                    shareText = `🎉 New High Score! I scored ${score} in Flappy Bird! ${gameLink}`;
+                } else if (score > 0) {
+                    shareText = `I scored ${score} in Flappy Bird! My high score is ${highScore}. Can you beat it? ${gameLink}`;
+                } else {
+                    shareText = `I'm playing Flappy Bird! My high score is ${highScore}. Join me and see if you can beat it! ${gameLink}`;
+                }
+            }
+
+            document.getElementById('shareText').textContent = shareText;
+            document.getElementById('shareModal').classList.remove('hidden');
+            document.getElementById('shareModalOverlay').classList.remove('hidden');
+        }
+
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.add('hidden');
+            document.getElementById('shareModalOverlay').classList.add('hidden');
+        }
+
+        function copyToClipboard() {
+            const shareText = document.getElementById('shareText').textContent;
+            
+            // Create a temporary textarea to copy text
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = shareText;
+            tempTextArea.style.position = 'fixed';
+            tempTextArea.style.left = '-9999px';
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            
+            try {
+                document.execCommand('copy');
+                document.getElementById('copyBtn').textContent = '✓ Copied to clipboard!';
+                setTimeout(() => {
+                    document.getElementById('copyBtn').textContent = 'Copy';
+                    closeShareModal();
+                }, 2000);
+            } catch (err) {
+                alert('Unable to copy to clipboard');
+            }
+            
+            document.body.removeChild(tempTextArea);
+        }
+
+        // Event Listeners
+        document.getElementById('startBtn').addEventListener('click', startGame);
+        document.getElementById('playAgainBtn').addEventListener('click', resetGame);
+        document.getElementById('shareStartBtn').addEventListener('click', () => openShareModal(true));
+        document.getElementById('shareGameOverBtn').addEventListener('click', () => openShareModal(false));
+        document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
+        document.getElementById('closeModalBtn').addEventListener('click', closeShareModal);
+        document.getElementById('shareModalOverlay').addEventListener('click', closeShareModal);
+
+        // Bird control - Click
+        canvas.addEventListener('click', () => {
+            if (gameState.isPlaying && gameState.bird) {
+                gameState.bird.flap();
+            }
+        });
+
+        // Bird control - Spacebar
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (gameState.isPlaying && gameState.bird) {
+                    gameState.bird.flap();
+                }
+            }
+        });
+
+        // Initial draw
+        drawBackground();
+        drawGround();
+        document.getElementById('startHighScore').textContent = gameState.highScore;
+    </script>
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>Imposter Game - Official Viral TikTok Game | Play Online Free</title>
+  <meta name="description" content="Play the viral TikTok Imposter Game! Find the imposter among players in this fun party game with multiple categories.">
+  <meta name="keywords" content="imposter game, tiktok game, party game, online games, viral game, imposter challenge, guessing game, word game">
+  <meta name="author" content="Imposter Game">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://iownchatgpt.com/viralimpostertiktokgame/">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Imposter Game - Official Viral TikTok Game">
+  <meta property="og:description" content="Play the viral TikTok Imposter Game! Find the imposter among players in this fun party game.">
+  <meta property="og:url" content="https://iownchatgpt.com/viralimpostertiktokgame/">
+  <meta property="og:site_name" content="iownchatgpt">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Imposter Game - Official Viral TikTok Game">
+  <meta name="twitter:description" content="Play the viral TikTok Imposter Game! Find the imposter among players.">
+  
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Game",
+    "name": "Imposter Game - Official Viral TikTok Game",
+    "description": "Play the viral TikTok Imposter Game! Find the imposter among players in this fun party game.",
+    "gamePlatform": "Web Browser",
+    "numberOfPlayers": "3-20",
+    "genre": ["Party Game", "Word Game", "Social Deduction"]
+  }
+  </script>
+</head>
+<body>
+  
+  <!-- Landing Screen -->
+  <div id="landing-screen" class="screen active">
+    <div class="container">
+      <div class="landing-content">
+        <h1 class="game-title">🎭 Imposter Game</h1>
+        <p class="game-subtitle">Official Viral TikTok Game - Find the Imposter!</p>
+        <div class="landing-buttons">
+          <button class="btn btn--primary btn--lg" onclick="showScreen('setup-screen')">Start Game</button>
+          <button class="btn btn--secondary btn--lg" onclick="showModal('instructions-modal')">How to Play</button>
+          <button class="btn btn--outline btn--lg" onclick="showModal('feedback-modal')">Send Feedback</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Setup Screen -->
+  <div id="setup-screen" class="screen">
+    <div class="container">
+      <div class="setup-content">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          Game Setup
+        </h2>
+        
+        <div class="card">
+          <div class="setup-section">
+            <label class="form-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              Number of Players (Minimum: 3, Maximum: 20)
+            </label>
+            <input type="number" id="num-players" class="form-control" min="3" max="20" value="4" onchange="updateKhiladiNames()" oninput="validatePlayerCount()" required>
+            <p id="player-count-error" class="error-message" style="display: none; color: var(--color-error); font-size: var(--font-size-sm); margin-top: var(--space-8); font-weight: var(--font-weight-bold); padding: var(--space-8); background: rgba(var(--color-error-rgb), 0.1); border-radius: var(--radius-sm); border: 1px solid var(--color-error);">At least 3 players are required</p>
+          </div>
+
+          <div class="setup-section">
+            <label class="form-label">Player Names (Optional - Auto-filled with defaults)</label>
+            <div id="player-names-container"></div>
+            <p class="help-text">Leave as default or customize player names</p>
+          </div>
+
+          <div class="setup-section">
+            <label class="form-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              Word Category
+            </label>
+            <select id="category" class="form-control">
+              <option value="random">🎲 Random Mix (All Categories)</option>
+              <option value="animals" selected>🐾 Animals</option>
+              <option value="food">🍕 Food</option>
+              <option value="objects">📦 Objects &amp; Things</option>
+              <option value="school">📚 School &amp; Learning</option>
+              <option value="sports">⚽ Sports &amp; Games</option>
+              <option value="movies">🎬 Movies &amp; Entertainment</option>
+              <option value="music">🎵 Music &amp; Instruments</option>
+              <option value="nature">🌲 Nature &amp; Outdoors</option>
+              <option value="technology">💻 Technology &amp; Gadgets</option>
+              <option value="jobs">👔 Jobs &amp; Professions</option>
+              <option value="superheroes">🦸 Superheroes &amp; Villains</option>
+              <option value="mythology">⚡ Mythology &amp; Legends</option>
+              <option value="countries">🌍 Countries &amp; Cities</option>
+              <option value="vehicles">🚗 Vehicles &amp; Transportation</option>
+              <option value="colors_emotions">🎨 Colors &amp; Emotions</option>
+              <option value="holidays">🎄 Holidays &amp; Celebrations</option>
+              <option value="fruits_vegetables">🍎 Fruits &amp; Vegetables</option>
+            </select>
+          </div>
+
+          <div class="setup-section">
+            <label class="form-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              Difficulty Level
+            </label>
+            <div class="button-group">
+              <button class="btn-option active" data-difficulty="easy" onclick="selectDifficulty('easy')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                  <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                  <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                </svg>
+                Easy
+              </button>
+              <button class="btn-option" data-difficulty="medium" onclick="selectDifficulty('medium')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="8" y1="15" x2="16" y2="15"></line>
+                  <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                  <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                </svg>
+                Medium
+              </button>
+              <button class="btn-option" data-difficulty="hard" onclick="selectDifficulty('hard')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M16 16s-1.5-2-4-2-4 2-4 2"></path>
+                  <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                  <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                </svg>
+                Hard
+              </button>
+            </div>
+          </div>
+
+          <div class="setup-section">
+            <label class="form-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                <path d="M2 17l10 5 10-5"></path>
+                <path d="M2 12l10 5 10-5"></path>
+              </svg>
+              Game Mode
+            </label>
+            <div class="button-group">
+              <button class="btn-option active" data-mode="classic" onclick="selectMode('classic')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                  <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
+                  <line x1="16" y1="8" x2="2" y2="22"></line>
+                  <line x1="17.5" y1="15" x2="9" y2="15"></line>
+                </svg>
+                Classic Mode
+              </button>
+
+              <button class="btn-option" data-mode="dark" onclick="selectMode('dark')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                In the Dark Mode
+              </button>
+            </div>
+            <p class="help-text" id="mode-description">Imposter knows they're the imposter</p>
+          </div>
+
+          <div class="setup-section">
+            <label class="form-label">Number of Imposters</label>
+            <select id="num-imposters" class="form-control">
+              <option value="1" selected>1 Imposter</option>
+              <option value="2">2 Imposters</option>
+            </select>
+          </div>
+
+          <div class="setup-section">
+            <label class="form-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              Theme
+            </label>
+            <select id="theme-select" class="form-control">
+              <option value="default">🎮 Default</option>
+              <option value="christmas">🎄 Christmas</option>
+              <option value="thanksgiving">🦃 Thanksgiving</option>
+              <option value="easter">🐰 Easter</option>
+              <option value="halloween">🎃 Halloween</option>
+              <option value="newyear">🎆 New Year</option>
+              <option value="valentine">💖 Valentine's Day</option>
+            </select>
+          </div>
+
+          <div class="setup-section">
+            <label class="toggle-label">
+              <input type="checkbox" id="hints-enabled" class="toggle-input">
+              <span class="toggle-slider"></span>
+              <span class="toggle-text">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Enable Hints
+              </span>
+            </label>
+          </div>
+
+
+
+          <div class="button-row">
+            <button class="btn btn--outline" onclick="showScreen('landing-screen')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              Back
+            </button>
+            <button class="btn btn--primary" onclick="startGame()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              Start Game
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Word Reveal Screen -->
+  <div id="reveal-screen" class="screen">
+    <div class="container">
+      <div class="reveal-content">
+
+        <div class="player-indicator">
+          <h2>Next Player</h2>
+          <h1 id="current-player-name" style="color: var(--color-primary);">Player 1</h1>
+        </div>
+        
+        <!-- v9 FEATURE: Before Reveal - Show "Shabda Dekhaunu" button for EVERY player -->
+        <div id="before-reveal" class="card reveal-card" style="min-height: 300px;">
+          <p style="font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); margin-bottom: var(--space-32); color: var(--color-text);">Remember this word!</p>
+          <button class="btn btn--primary btn--lg" onclick="revealWord()" style="padding: var(--space-20) var(--space-32); font-size: var(--font-size-xl);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            Reveal Word
+          </button>
+        </div>
+
+        <!-- After Reveal: Show the word -->
+        <div id="after-reveal" class="card reveal-card" style="display: none;">
+          <div id="word-display" class="word-display">WORD</div>
+          <p id="hint-display" class="hint-display">Remember this word!</p>
+        </div>
+
+        <button id="next-player-btn" class="btn btn--primary btn--lg btn--full-width" onclick="nextReveal()" style="display: none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+          Next Player
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Voting Screen -->
+  <div id="voting-screen" class="screen">
+    <div class="container">
+      <div class="voting-content">
+
+        <h2>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          Who is the Imposter?
+        </h2>
+        
+        <div class="card">
+          <p class="instruction-text" style="margin-bottom: var(--space-16);">Discuss and identify the imposter</p>
+          <p id="vote-limit-text" class="vote-limit-text" style="margin-bottom: var(--space-24); font-weight: var(--font-weight-semibold); color: var(--color-primary);">You can select 1 player</p>
+          
+          <div id="eliminated-section" style="display: none; margin-bottom: var(--space-24); padding: var(--space-16); background: var(--color-bg-4); border-radius: var(--radius-base);">
+            <h4 style="margin-bottom: var(--space-12);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+              </svg>
+              Eliminated Players:
+            </h4>
+            <div id="eliminated-list" style="display: flex; flex-wrap: wrap; gap: var(--space-8);"></div>
+          </div>
+          
+          <div id="voting-buttons" class="voting-buttons"></div>
+          
+          <div class="button-row" style="margin-top: var(--space-32);">
+            <button class="btn btn--outline" onclick="showVotingScreen()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+              </svg>
+              Reset Votes
+            </button>
+            <button class="btn btn--primary" onclick="calculateResults()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                <polyline points="9 11 12 14 22 4"></polyline>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+              </svg>
+              Show Results
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Screen -->
+  <div id="results-screen" class="screen">
+    <div class="container">
+      <div class="results-content">
+        <h2 id="results-title">🎉 Game Results</h2>
+        
+        <div class="card results-card">
+          <div id="results-details" class="results-details">
+            <!-- Results will be populated by JavaScript -->
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-24);">
+          <h3 style="margin-bottom: var(--space-16);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+            </svg>
+            Share This Game
+          </h3>
+          <div class="share-buttons">
+            <button class="btn btn--secondary" onclick="shareGame()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                <polyline points="16 6 12 2 8 6"></polyline>
+                <line x1="12" y1="2" x2="12" y2="15"></line>
+              </svg>
+              Copy Link
+            </button>
+          </div>
+        </div>
+
+        <div class="button-row" style="margin-top: var(--space-32);">
+          <button class="btn btn--outline" onclick="showScreen('landing-screen')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Main Menu
+          </button>
+          <button class="btn btn--primary" onclick="showScreen('setup-screen')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            Play Again
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Instructions Modal -->
+  <div id="instructions-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          How to Play
+        </h2>
+        <button class="modal-close" onclick="closeModal('instructions-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" style="vertical-align: middle; margin-right: 6px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="6"></circle>
+            <circle cx="12" cy="12" r="2"></circle>
+          </svg>
+          Objective
+        </h3>
+        <p>Regular players must identify the imposter(s). Imposters must blend in and avoid being caught.</p>
+
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" style="vertical-align: middle; margin-right: 6px;">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+          Setup
+        </h3>
+        <ul>
+          <li>Choose 3-20 players</li>
+          <li>Select a word category and difficulty</li>
+          <li>Pick game mode (Classic or In the Dark)</li>
+          <li>Decide on 1 or 2 imposters</li>
+        </ul>
+
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" stroke-width="2" style="vertical-align: middle; margin-right: 6px;">
+            <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+            <polyline points="17 2 12 7 7 2"></polyline>
+          </svg>
+          Gameplay
+        </h3>
+        <ul>
+          <li><strong>Word Reveal:</strong> Pass device to each player. Click "Reveal Word" to see your word (or imposter message)</li>
+          <li><strong>Discussion:</strong> Talk about the word WITHOUT saying it directly. Imposters must blend in</li>
+          <li><strong>Voting:</strong> Vote for who you think is the imposter</li>
+          <li><strong>Results:</strong> If imposter is caught, regular players win. Otherwise, imposters win</li>
+        </ul>
+
+        <h3>🎭 Game Modes</h3>
+        <p><strong>Classic Mode:</strong> Imposters know they're imposters. Screen shows "You are the imposter!" message. Regular players see the secret word.</p>
+        <p><strong>In the Dark Mode:</strong> Nobody knows who has matching words. Everyone just sees a word - no indication of role. Regular players get the same word, imposters get different words. During discussion, figure out who has the different word without directly revealing your word.</p>
+        
+        <h3>🎯 Win Conditions</h3>
+        <p><strong>Classic Mode:</strong> If imposter is voted out, regular players win. Otherwise, imposters win.</p>
+        <p><strong>In the Dark Mode (1 imposter):</strong></p>
+        <ul>
+          <li>If player with different word is voted out → Regular players win</li>
+          <li>If regular player is voted out → Imposter wins</li>
+        </ul>
+        <p><strong>In the Dark Mode (2 imposters):</strong></p>
+        <ul>
+          <li>If BOTH players with different words are voted out → Regular players win</li>
+          <li>If at least ONE regular player is voted out → Imposters win</li>
+        </ul>
+
+        <h3>💡 Tips</h3>
+        <ul>
+          <li>Give subtle hints but don't be too obvious</li>
+          <li>Looking too confused or surprised can be suspicious</li>
+          <li>Imposters: Blend in by listening carefully and matching others' energy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback Modal -->
+  <div id="feedback-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          Send Feedback
+        </h2>
+        <button class="modal-close" onclick="closeModal('feedback-modal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="feedback-form">
+          <!-- Web3Forms Required Fields -->
+          <input type="hidden" name="access_key" value="ba355a9f-5ad5-4c9d-8d0d-878a486380b0">
+          <input type="hidden" name="redirect" value="false">
+          <input type="hidden" name="to" value="maime@himal.info.np">
+          <input type="hidden" name="from_name" value="Chor Patta Lagau - Feedback Form">
+          
+          <div class="form-group">
+            <label class="form-label">Your Name (Optional)</label>
+            <input type="text" name="name" id="feedback-name" class="form-control" placeholder="Enter your name">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Email (Optional)</label>
+            <input type="email" name="email" id="feedback-email" class="form-control" placeholder="your@email.com">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Subject (Optional)</label>
+            <input type="text" name="subject" id="feedback-subject" class="form-control" placeholder="Enter subject">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Your Feedback <span style="color: var(--color-error);">*</span></label>
+            <textarea name="message" id="feedback-message" class="form-control" placeholder="Share your thoughts..." required minlength="10"></textarea>
+          </div>
+          
+          <button type="submit" class="btn btn--primary btn--full-width" id="feedback-submit-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            Send Feedback
+          </button>
+        </form>
+        
+        <div id="feedback-status" style="margin-top: var(--space-16); padding: var(--space-12); border-radius: var(--radius-base); display: none;"></div>
+        
+        <p style="margin-top: var(--space-32); text-align: center; color: var(--color-text-secondary);">Thank you for playing Imposter Game! ❤️</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

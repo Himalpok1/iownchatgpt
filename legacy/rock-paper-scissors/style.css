@@ -1,0 +1,147 @@
+:root {
+  --bg: #f6f8fc;
+  --surface: #ffffff;
+  --text: #14213d;
+  --muted: #44516d;
+  --accent: #005f73;
+  --accent-hover: #004e5f;
+  --border: #d8e0ef;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text);
+  background: linear-gradient(180deg, #eaf4ff 0%, var(--bg) 45%, #eefaf6 100%);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.topbar h1 {
+  margin: 0;
+  text-align: center;
+  font-size: 1.9rem;
+}
+
+.nav-link {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.score-box {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.score-box > div {
+  text-align: center;
+}
+
+.label {
+  margin: 0;
+  color: var(--muted);
+}
+
+.score {
+  margin: 4px 0 0;
+  font-size: 1.7rem;
+  font-weight: 800;
+}
+
+.choice-row {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.choice,
+#resetBtn {
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+.choice:hover,
+#resetBtn:hover {
+  background: var(--accent-hover);
+}
+
+.result-box,
+.history-box {
+  margin-top: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.result-box p {
+  margin: 0;
+}
+
+.muted {
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.history-header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+#historyList {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+#historyList li {
+  margin-bottom: 6px;
+}
+
+@media (max-width: 640px) {
+  .topbar h1 {
+    font-size: 1.35rem;
+  }
+
+  .choice-row,
+  .score-box {
+    grid-template-columns: 1fr;
+  }
+}

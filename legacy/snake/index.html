@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake Game Online - Free Browser Arcade | iownchatgpt</title>
+  <meta name="description" content="Play Snake online for free. Eat food, grow longer, and beat your high score in this classic arcade game.">
+  <meta name="keywords" content="snake game online,classic snake browser game,free arcade snake">
+  <meta name="author" content="iownchatgpt">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://iownchatgpt.com/snake/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Snake Game Online - Free Browser Arcade">
+  <meta property="og:description" content="Play the classic Snake game in your browser and beat your best score.">
+  <meta property="og:url" content="https://iownchatgpt.com/snake/">
+  <meta property="og:site_name" content="iownchatgpt">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Snake Game Online - Free Browser Arcade">
+  <meta name="twitter:description" content="Eat food, grow longer, and avoid collisions.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="topbar">
+      <a href="../index.html">Home</a>
+      <h1>Snake</h1>
+      <a href="../guides.html">Guides</a>
+    </header>
+
+    <section class="hud">
+      <p><strong>Score:</strong> <span id="score">0</span></p>
+      <p><strong>Best:</strong> <span id="best">0</span></p>
+      <button id="startBtn" type="button">Start / Restart</button>
+    </section>
+
+    <canvas id="gameCanvas" width="420" height="420" aria-label="Snake game area"></canvas>
+    <p id="status" class="status">Press Start, then use arrow keys or WASD.</p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

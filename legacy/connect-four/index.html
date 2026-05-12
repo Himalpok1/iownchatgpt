@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connect Four Online - Free 2 Player Game | iownchatgpt</title>
+  <meta name="description" content="Play Connect Four online in two-player local mode. Drop discs, block opponents, and connect four to win.">
+  <meta name="keywords" content="connect four online,2 player connect four,free browser board game">
+  <meta name="author" content="iownchatgpt">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://iownchatgpt.com/connect-four/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Connect Four Online - Free 2 Player Game">
+  <meta property="og:description" content="Play local 2-player Connect Four in your browser.">
+  <meta property="og:url" content="https://iownchatgpt.com/connect-four/">
+  <meta property="og:site_name" content="iownchatgpt">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Connect Four Online - Free 2 Player Game">
+  <meta name="twitter:description" content="Drop discs, make lines, and challenge a friend.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="topbar">
+      <a href="../index.html">Home</a>
+      <h1>Connect Four</h1>
+      <a href="../guides.html">Guides</a>
+    </header>
+
+    <section class="hud">
+      <p><strong>Current:</strong> <span id="currentPlayer">Player 1 (Red)</span></p>
+      <button id="resetBtn" type="button">New Match</button>
+    </section>
+
+    <section class="controls" id="columnControls"></section>
+    <section class="board" id="board"></section>
+    <p id="status" class="status">Drop a disc to start.</p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

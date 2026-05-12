@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tetris-Style Block Stacker - Free Browser Game | iownchatgpt</title>
+  <meta name="description" content="Play a classic block stacker inspired by Tetris. Clear lines, score points, and survive as speed increases.">
+  <meta name="keywords" content="tetris browser game,block stacker online,free puzzle arcade">
+  <meta name="author" content="iownchatgpt">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://iownchatgpt.com/tetris/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tetris-Style Block Stacker - Free Browser Game">
+  <meta property="og:description" content="Clear lines and climb the score in this classic falling-block puzzle game.">
+  <meta property="og:url" content="https://iownchatgpt.com/tetris/">
+  <meta property="og:site_name" content="iownchatgpt">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tetris-Style Block Stacker - Free Browser Game">
+  <meta name="twitter:description" content="Free falling-block puzzle game with score and level progression.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="topbar">
+      <a href="../index.html">Home</a>
+      <h1>Block Stacker</h1>
+      <a href="../guides.html">Guides</a>
+    </header>
+
+    <section class="hud">
+      <p><strong>Score:</strong> <span id="score">0</span></p>
+      <p><strong>Level:</strong> <span id="level">1</span></p>
+      <button id="startBtn" type="button">Start / Restart</button>
+    </section>
+
+    <canvas id="tetrisCanvas" width="300" height="600"></canvas>
+    <p id="status" class="status">Controls: ← → move, ↑ rotate, ↓ soft drop.</p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

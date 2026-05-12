@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rock Paper Scissors Online - Free Browser Game | iownchatgpt</title>
+  <meta name="description" content="Play Rock Paper Scissors online for free. Challenge the computer, track rounds, and race to five wins.">
+  <meta name="keywords" content="rock paper scissors online,free browser game,rps game,quick mini game">
+  <meta name="author" content="iownchatgpt">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://iownchatgpt.com/rock-paper-scissors/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Rock Paper Scissors Online - Free Browser Game">
+  <meta property="og:description" content="Free Rock Paper Scissors game with score tracking and round history.">
+  <meta property="og:url" content="https://iownchatgpt.com/rock-paper-scissors/">
+  <meta property="og:site_name" content="iownchatgpt">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Rock Paper Scissors Online - Free Browser Game">
+  <meta name="twitter:description" content="Play Rock Paper Scissors online and race to five wins.">
+
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Game",
+    "name": "Rock Paper Scissors Online",
+    "url": "https://iownchatgpt.com/rock-paper-scissors/",
+    "description": "A browser-based rock paper scissors game against the computer.",
+    "gamePlatform": "Web Browser",
+    "applicationCategory": "Game"
+  }
+  </script>
+</head>
+<body>
+  <main class="container">
+    <header class="topbar">
+      <a href="../index.html" class="nav-link">Home</a>
+      <h1>Rock Paper Scissors</h1>
+      <a href="../guides.html" class="nav-link">Guides</a>
+    </header>
+
+    <section class="score-box" aria-label="Current score">
+      <div>
+        <p class="label">You</p>
+        <p class="score" id="playerScore">0</p>
+      </div>
+      <div>
+        <p class="label">Computer</p>
+        <p class="score" id="cpuScore">0</p>
+      </div>
+      <div>
+        <p class="label">Round</p>
+        <p class="score" id="roundCount">1</p>
+      </div>
+    </section>
+
+    <section class="choice-row" aria-label="Choose your move">
+      <button type="button" class="choice" data-choice="rock">✊ Rock</button>
+      <button type="button" class="choice" data-choice="paper">✋ Paper</button>
+      <button type="button" class="choice" data-choice="scissors">✌️ Scissors</button>
+    </section>
+
+    <section class="result-box" aria-live="polite">
+      <p id="resultText">Pick your move to start.</p>
+      <p id="detailText" class="muted"></p>
+    </section>
+
+    <section class="history-box">
+      <div class="history-header">
+        <h2>Last Rounds</h2>
+        <button id="resetBtn" type="button">Reset Match</button>
+      </div>
+      <ul id="historyList"></ul>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

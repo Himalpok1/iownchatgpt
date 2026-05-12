@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simon Memory Game - Free Pattern Game | iownchatgpt</title>
+  <meta name="description" content="Play Simon memory game online for free. Watch the pattern, repeat it, and push your level higher.">
+  <meta name="keywords" content="simon game online,memory pattern game,free browser memory game">
+  <meta name="author" content="iownchatgpt">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://iownchatgpt.com/simon-memory/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Simon Memory Game - Free Pattern Game">
+  <meta property="og:description" content="Memorize and repeat growing color sequences.">
+  <meta property="og:url" content="https://iownchatgpt.com/simon-memory/">
+  <meta property="og:site_name" content="iownchatgpt">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Simon Memory Game - Free Pattern Game">
+  <meta name="twitter:description" content="Pattern memory challenge playable in your browser.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="topbar">
+      <a href="../index.html">Home</a>
+      <h1>Simon Memory</h1>
+      <a href="../guides.html">Guides</a>
+    </header>
+
+    <section class="hud">
+      <p><strong>Level:</strong> <span id="level">0</span></p>
+      <p><strong>Best:</strong> <span id="best">0</span></p>
+      <button id="startBtn" type="button">Start Game</button>
+    </section>
+
+    <section class="pads" id="pads">
+      <button class="pad pad-0" data-pad="0" aria-label="Green pad"></button>
+      <button class="pad pad-1" data-pad="1" aria-label="Red pad"></button>
+      <button class="pad pad-2" data-pad="2" aria-label="Yellow pad"></button>
+      <button class="pad pad-3" data-pad="3" aria-label="Blue pad"></button>
+    </section>
+
+    <p id="status" class="status">Press Start to begin.</p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
