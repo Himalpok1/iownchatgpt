@@ -7,6 +7,12 @@
 
 ## Work Log
 
+### 2026-05-13 16:23:40 CDT — Hostinger GitHub deployment completed
+- Files changed: `details.md`
+- What changed: Corrected the local git remote to `Himalpok1/iownchatgpt`, committed the current newsroom/UI/deployment work, pushed `main` to GitHub, connected the new Hostinger Node.js app to the GitHub repo, added the production environment variables in Hostinger, and completed the first live deployment for `iownchatgpt.com`.
+- Verification: `git push origin main` updated GitHub from `9e03bd2` to `ca86ad6`; Hostinger deployment finished with a successful build from GitHub; `curl -I https://iownchatgpt.com` returned `x-powered-by: Next.js` and `platform: hostinger`; `curl -L https://iownchatgpt.com` returned the new Next.js homepage HTML; Chrome loaded `https://iownchatgpt.com/` with the live app shell instead of the old FTP-only static site.
+- Follow-up: Configure Google OAuth client credentials in production when ready, then add the editorial cron trigger on Hostinger or another scheduler so `/api/editorial/run` executes three times daily in production.
+
 ### 2026-05-13 16:15:37 CDT — GitHub deployment handoff started
 - Files changed: `details.md`
 - What changed: Confirmed the working tree is based on `Himalpok1/iownchatgpt` history, detected that the local `origin` remote was incorrectly pointing at `Himalpok1/himal-cloud`, and began the handoff to a GitHub-based Hostinger deployment flow instead of raw FTP upload.
