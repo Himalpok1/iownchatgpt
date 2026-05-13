@@ -245,7 +245,7 @@ const App: React.FC = () => {
              <Zap className="w-4 h-4" />
            </div>
            <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">AI Commentary</h3>
-           <p className="text-sm text-slate-300 leading-relaxed italic">"{commentary}"</p>
+           <p className="text-sm text-slate-300 leading-relaxed italic">&ldquo;{commentary}&rdquo;</p>
         </div>
         
         {/* Game Status / Captured */}

@@ -11,6 +11,16 @@ const options = ["rock", "paper", "scissors"];
 let playerScore = 0;
 let cpuScore = 0;
 let round = 1;
+let gameReported = false;
+
+function reportGameOver(finalScore) {
+  if (gameReported) {
+    return;
+  }
+
+  gameReported = true;
+  window.parent?.postMessage({ type: "GAME_OVER", score: finalScore }, "*");
+}
 
 function cpuChoice() {
   return options[Math.floor(Math.random() * options.length)];
@@ -60,9 +70,11 @@ function checkMatchEnd() {
   if (playerScore === 5) {
     resultTextEl.textContent = "You won the match.";
     detailTextEl.textContent = "Reset to play again.";
+    reportGameOver(playerScore);
   } else {
     resultTextEl.textContent = "Computer won the match.";
     detailTextEl.textContent = "Reset to try again.";
+    reportGameOver(playerScore);
   }
 
   choiceButtons.forEach((button) => {
@@ -100,6 +112,7 @@ function resetMatch() {
   playerScore = 0;
   cpuScore = 0;
   round = 1;
+  gameReported = false;
   resultTextEl.textContent = "Pick your move to start.";
   detailTextEl.textContent = "";
   historyListEl.innerHTML = "";

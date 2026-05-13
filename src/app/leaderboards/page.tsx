@@ -3,6 +3,7 @@ import Link from "next/link";
 import { db, scores, games, users } from "@/lib/db";
 import { eq, desc, sql } from "drizzle-orm";
 import { games as gamesRegistry } from "@/lib/games";
+import { ArrowRight, BarChart3, Trophy, UserRound } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Leaderboards",
@@ -88,43 +89,91 @@ export default async function LeaderboardsPage() {
       </nav>
 
       <section className="content-section">
-        <div className="container">
-          <h1
-            className="text-3xl sm:text-4xl md:text-[48px] text-center mb-[var(--space-16)] gradient-text-section"
-            style={{ fontWeight: "var(--font-weight-bold)" }}
-          >
-            Global Leaderboards
-          </h1>
-          <p className="text-center text-[var(--font-size-xl)] text-[var(--color-gray-300)] mb-[var(--space-32)]">
-            Top scores across all games. Sign up to compete!
-          </p>
+        <div className="container page-shell">
+          <div className="page-hero">
+            <div className="page-hero__header">
+              <div>
+                <p className="home-section__eyebrow">Competition</p>
+                <h1 className="page-hero__title">See where the best runs are landing.</h1>
+              </div>
+              <p className="page-hero__copy">
+                Global leaderboards across the full game library. Every card below jumps into a
+                per-game ranking page with the latest standings.
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="page-summary-grid">
+              <div className="surface-panel page-summary-card">
+                <p className="page-summary-card__label">Tracked games</p>
+                <div className="page-summary-card__value">
+                  <Trophy size={18} className="text-[var(--color-cyan)]" />
+                  {allGames.length} scoreboards
+                </div>
+                <p className="page-summary-card__copy">
+                  Each game has its own leaderboard view and top-score summary.
+                </p>
+              </div>
+              <div className="surface-panel page-summary-card">
+                <p className="page-summary-card__label">Competition style</p>
+                <div className="page-summary-card__value">
+                  <BarChart3 size={18} className="text-[var(--color-cyan)]" />
+                  global high-score chase
+                </div>
+                <p className="page-summary-card__copy">
+                  Great for quick sessions, repeat runs, and friendly bragging rights.
+                </p>
+              </div>
+              <div className="surface-panel page-summary-card">
+                <p className="page-summary-card__label">Who can climb</p>
+                <div className="page-summary-card__value">
+                  <UserRound size={18} className="text-[var(--color-cyan)]" />
+                  any signed-in player
+                </div>
+                <p className="page-summary-card__copy">
+                  If a board looks empty, that just means there is room to claim first place.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="home-section__header mb-6">
+            <div>
+              <p className="home-section__eyebrow">All boards</p>
+              <h2 className="text-white text-[1.3rem] font-[var(--font-weight-semibold)]">
+                Jump into a game-specific ranking
+              </h2>
+            </div>
+            <p className="home-section__copy">
+              Top scores update from the live database, with empty states that still make it clear
+              what to play next.
+            </p>
+          </div>
+
+          <div className="home-games-grid">
             {allGames.map((game) => (
               <Link
                 key={game.slug}
                 href={`/games/${game.slug}/leaderboard`}
-                className="card-glass p-6 no-underline transition-transform"
+                className="card-glass game-card no-underline"
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="text-[40px]">{game.icon}</span>
-                  <div>
-                    <h3 className="text-white text-[var(--font-size-xl)] font-[var(--font-weight-semibold)]">
-                      {game.name}
-                    </h3>
-                    <span className="text-[var(--color-gray-400)] text-sm">
-                      {game.scoreCount.toLocaleString()} scores
-                    </span>
+                <div className="game-card__top">
+                  <div className="flex items-center gap-4 min-w-0">
+                    <span className="game-card__emoji text-[24px]">{game.icon}</span>
+                    <div className="min-w-0">
+                      <h3 className="game-card__title">{game.name}</h3>
+                      <span className="text-[var(--color-gray-400)] text-sm">
+                        {game.scoreCount.toLocaleString()} scores submitted
+                      </span>
+                    </div>
                   </div>
+                  <span className="badge text-xs">Rankings</span>
                 </div>
 
                 {game.topScore !== null ? (
-                  <div className="flex items-center justify-between">
+                  <div>
                     <div>
-                      <div
-                        className="text-[var(--font-size-3xl)] gradient-text"
-                        style={{ fontWeight: "var(--font-weight-bold)" }}
-                      >
+                      <p className="text-sm text-[var(--color-gray-400)] mb-2">Current top score</p>
+                      <div className="text-[2rem] gradient-text font-[var(--font-weight-bold)]">
                         {game.topScore.toLocaleString()}
                       </div>
                       {game.username && (
@@ -133,18 +182,22 @@ export default async function LeaderboardsPage() {
                         </div>
                       )}
                     </div>
-                    <span className="badge text-xs">Top Score</span>
                   </div>
                 ) : (
-                  <div className="text-center py-4">
+                  <div className="py-1">
                     <p className="text-[var(--color-gray-400)] text-[var(--font-size-lg)] mb-2">
                       No scores yet
                     </p>
                     <span className="text-[var(--color-cyan)] text-[var(--font-size-lg)]">
-                      Be the first! &rarr;
+                      Be the first to set the pace.
                     </span>
                   </div>
                 )}
+
+                <div className="game-card__footer">
+                  <span>{game.topScore !== null ? "Open full leaderboard" : "Start the first run"}</span>
+                  <ArrowRight size={16} />
+                </div>
               </Link>
             ))}
           </div>

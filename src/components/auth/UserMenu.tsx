@@ -83,6 +83,15 @@ export function UserMenu() {
           >
             Leaderboards
           </Link>
+          {session.user?.isAdmin ? (
+            <Link
+              href="/admin/blog"
+              className="block px-4 py-2 text-[var(--color-gray-300)] hover:text-[var(--color-cyan)] transition-colors text-[var(--font-size-lg)] no-underline"
+              onClick={() => setOpen(false)}
+            >
+              Admin Newsroom
+            </Link>
+          ) : null}
           <div className="border-t border-[rgba(125,211,252,0.1)] my-1" />
           <button
             onClick={() => { signOut({ callbackUrl: "/" }); setOpen(false); }}

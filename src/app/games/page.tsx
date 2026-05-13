@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight, Trophy } from "lucide-react";
 import { games } from "@/lib/games";
 
 export const metadata: Metadata = {
@@ -22,37 +23,61 @@ export default function GamesPage() {
 
       <section className="content-section">
         <div className="container">
-          <h1
-            className="text-3xl sm:text-4xl md:text-[48px] text-center mb-[var(--space-16)] gradient-text-section"
-            style={{ fontWeight: "var(--font-weight-bold)" }}
-          >
-            Game Library
-          </h1>
-          <p className="text-center text-[var(--font-size-xl)] text-[var(--color-gray-300)] mb-[var(--space-32)]">
-            Play our growing collection of quick, replayable games built for
-            desktop and mobile.
-          </p>
+          <div className="home-section__header mb-8">
+            <div>
+              <p className="home-section__eyebrow">Library</p>
+              <h1 className="home-section__title">Game library</h1>
+            </div>
+            <p className="home-section__copy">
+              Browse the full shelf, jump into a title quickly, and use the
+              leaderboard or guide paths when you want a little more structure
+              than a one-off session.
+            </p>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[var(--space-32)]">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mb-8">
+            <div className="surface-panel p-5">
+              <p className="home-section__eyebrow !mb-2">Available now</p>
+              <div className="text-2xl font-bold text-white">{games.length}</div>
+              <p className="text-sm text-[var(--color-gray-300)]">
+                games ready to play in the browser
+              </p>
+            </div>
+            <div className="surface-panel p-5">
+              <p className="home-section__eyebrow !mb-2">Leaderboards</p>
+              <div className="text-2xl font-bold text-white">Live</div>
+              <p className="text-sm text-[var(--color-gray-300)]">
+                score tracking across supported titles
+              </p>
+            </div>
+            <div className="surface-panel p-5">
+              <p className="home-section__eyebrow !mb-2">Built for replay</p>
+              <div className="inline-flex items-center gap-2 text-white font-semibold">
+                <Trophy size={18} className="text-[var(--color-cyan)]" />
+                quick sessions, clear loops
+              </div>
+            </div>
+          </div>
+
+          <div className="home-games-grid">
             {games.map((game) => (
               <Link
                 key={game.slug}
                 href={`/games/${game.slug}`}
-                className="card-glass p-[var(--space-32)] text-center cursor-pointer no-underline transition-transform duration-[var(--duration-normal)]"
+                className="game-card card-glass"
               >
-                <div className="text-[80px] mb-[var(--space-16)]">
-                  {game.icon}
+                <div className="game-card__top">
+                  <span className="game-card__emoji">{game.icon}</span>
+                  <span className="badge">Play now</span>
                 </div>
-                <h3
-                  className="text-[var(--font-size-3xl)] text-white mb-[var(--space-12)]"
-                  style={{ fontWeight: "var(--font-weight-bold)" }}
-                >
-                  {game.title}
-                </h3>
-                <p className="text-[var(--font-size-lg)] text-[var(--color-gray-300)] mb-[var(--space-24)] leading-relaxed">
-                  {game.description}
-                </p>
-                <span className="btn-gradient">Play Now</span>
+                <div>
+                  <h3 className="game-card__title">{game.title}</h3>
+                  <p className="game-card__copy">{game.description}</p>
+                </div>
+                <div className="game-card__footer">
+                  <span>Open game</span>
+                  <ArrowRight size={16} />
+                </div>
               </Link>
             ))}
           </div>

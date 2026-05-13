@@ -191,4 +191,11 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
-export const blogCategories = ["All", "AI", "Tech", "Crypto", "Consumer Electronics"] as const;
+export const blogCategories = [
+  "All",
+  "AI",
+  "Tech",
+  "Crypto",
+  "Consumer Electronics",
+  "Daily Roundup",
+] as const;

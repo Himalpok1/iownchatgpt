@@ -28,6 +28,16 @@ let lines = 0;
 let level = 1;
 let running = false;
 let timer = null;
+let gameReported = false;
+
+function reportGameOver(finalScore) {
+  if (gameReported) {
+    return;
+  }
+
+  gameReported = true;
+  window.parent?.postMessage({ type: "GAME_OVER", score: finalScore }, "*");
+}
 
 function createBoard() {
   return Array.from({ length: ROWS }, () => Array(COLS).fill(0));
@@ -154,6 +164,7 @@ function gameOver() {
   clearInterval(timer);
   timer = null;
   statusEl.textContent = `Game over. Score: ${score}. Start again.`;
+  reportGameOver(score);
 }
 
 function spawnPiece() {
@@ -185,6 +196,7 @@ function startGame() {
   lines = 0;
   level = 1;
   running = true;
+  gameReported = false;
   scoreEl.textContent = "0";
   levelEl.textContent = "1";
   statusEl.textContent = "Controls: left/right, rotate with up, down to drop.";

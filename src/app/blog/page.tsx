@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { blogPosts, blogCategories } from "@/lib/blog";
+import { ArrowRight, BookOpenText, Newspaper, Rss, Sparkles } from "lucide-react";
+import { blogCategories } from "@/lib/blog";
+import { getMergedBlogPosts } from "@/lib/editorial/articles";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -19,10 +21,7 @@ export default async function BlogPage({
       ? rawCat
       : "All";
 
-  const filtered =
-    activeCategory === "All"
-      ? blogPosts
-      : blogPosts.filter((p) => p.category === activeCategory);
+  const filtered = await getMergedBlogPosts(activeCategory);
 
   return (
     <>
@@ -35,19 +34,64 @@ export default async function BlogPage({
       </nav>
 
       <section className="content-section">
-        <div className="container">
-          <h1
-            className="text-3xl sm:text-4xl md:text-[48px] text-center mb-[var(--space-16)] gradient-text-section"
-            style={{ fontWeight: "var(--font-weight-bold)" }}
-          >
-            Trending Blog
-          </h1>
-          <p className="text-center text-[var(--font-size-xl)] text-[var(--color-gray-300)] mb-[var(--space-32)]">
-            Long-form articles on AI, tech, crypto, and consumer electronics.
-          </p>
+        <div className="container page-shell">
+          <div className="page-hero">
+            <div className="page-hero__header">
+              <div>
+                <p className="home-section__eyebrow">Editorial</p>
+                <h1 className="page-hero__title">Reporting that still feels useful a week later.</h1>
+              </div>
+              <p className="page-hero__copy">
+                Long-form coverage across AI, tech, crypto, and consumer electronics,
+                written to be useful on its own and relevant to the site around it.
+              </p>
+            </div>
 
-          {/* Category filters */}
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            <div className="page-summary-grid">
+              <div className="surface-panel page-summary-card">
+                <p className="page-summary-card__label">Published</p>
+                <div className="page-summary-card__value">{filtered.length} live articles</div>
+                <p className="page-summary-card__copy">
+                  A compact archive of trend-aware writing with practical takeaways.
+                </p>
+              </div>
+              <div className="surface-panel page-summary-card">
+                <p className="page-summary-card__label">Coverage</p>
+                <div className="page-summary-card__value">
+                  <Rss size={18} className="text-[var(--color-cyan)]" />
+                  AI, Tech, Crypto, Consumer
+                </div>
+                <p className="page-summary-card__copy">
+                  Broad enough to explore trends, tight enough to stay readable.
+                </p>
+              </div>
+              <div className="surface-panel page-summary-card">
+                <p className="page-summary-card__label">Editorial style</p>
+                <div className="page-summary-card__value">
+                  <Sparkles size={18} className="text-[var(--color-cyan)]" />
+                  clear, practical, current
+                </div>
+                <p className="page-summary-card__copy">
+                  Written for people who want signal instead of recycled takes.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="home-section__header mb-4">
+            <div>
+              <p className="home-section__eyebrow">Browse</p>
+              <h2 className="text-white text-[1.3rem] font-[var(--font-weight-semibold)]">
+                Filter by topic
+              </h2>
+            </div>
+            <p className="home-section__copy">
+              Long-form coverage across AI, tech, crypto, and consumer electronics,
+              with a front page that stays scannable when you just want one good read.
+            </p>
+          </div>
+
+          <div className="filter-row">
             {blogCategories.map((cat) => {
               const active = cat === activeCategory;
               const href = cat === "All" ? "/blog" : `/blog?category=${encodeURIComponent(cat)}`;
@@ -55,11 +99,7 @@ export default async function BlogPage({
                 <Link
                   key={cat}
                   href={href}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all border no-underline ${
-                    active
-                      ? "bg-gradient-to-r from-[var(--color-purple)] to-[var(--color-cyan)] text-white border-transparent"
-                      : "border-[rgba(125,211,252,0.2)] text-[var(--color-gray-300)] hover:border-[var(--color-cyan)] hover:text-white"
-                  }`}
+                  className={`filter-chip no-underline ${active ? "is-active" : ""}`}
                 >
                   {cat}
                 </Link>
@@ -67,26 +107,41 @@ export default async function BlogPage({
             })}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[var(--space-24)]">
-            {filtered.map((post) => (
+          <div className="article-grid">
+                {filtered.map((post, index) => (
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="card-glass p-[var(--space-24)] no-underline flex flex-col transition-transform hover:-translate-y-1"
+                className={`card-glass article-card no-underline ${
+                  index === 0 ? "article-card--featured" : ""
+                }`}
               >
-                <span className="badge mb-3 inline-block text-xs w-fit">{post.category}</span>
-                <h3 className="text-[var(--font-size-xl)] text-white mb-[var(--space-12)] font-[var(--font-weight-semibold)] leading-snug flex-1">
-                  {post.title}
-                </h3>
-                <p className="text-[var(--color-gray-400)] text-sm mb-4 line-clamp-2">
-                  {post.description}
-                </p>
-                <div className="flex items-center justify-between mt-auto">
-                  <span className="text-[var(--color-gray-400)] text-xs">
-                    {new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                <div className="article-card__meta">
+                  <span className="badge w-fit text-xs">{post.category}</span>
+                  <span className="text-xs text-[var(--color-gray-400)]">
+                    {new Date(post.date).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
                   </span>
-                  <span className="text-[var(--color-cyan)] text-sm">
-                    Read &rarr;
+                </div>
+                <div className="flex-1">
+                  <h3 className="article-card__title font-[var(--font-weight-semibold)] mb-3">
+                    {post.title}
+                  </h3>
+                  <p className={`article-card__copy ${index === 0 ? "" : "line-clamp-3"}`}>
+                    {post.description}
+                  </p>
+                </div>
+                <div className="article-card__footer">
+                  <span className="inline-flex items-center gap-2 text-sm text-[var(--color-gray-400)]">
+                    {index === 0 ? <BookOpenText size={14} /> : <Newspaper size={14} />}
+                    {post.author}
+                  </span>
+                  <span className="inline-flex items-center gap-2 text-sm text-[var(--color-cyan)]">
+                    Read article
+                    <ArrowRight size={14} />
                   </span>
                 </div>
               </Link>

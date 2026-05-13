@@ -91,7 +91,7 @@ export default async function GamePage({
 
           {/* Game */}
           {isChess ? (
-            <ChessGame userId={userId} />
+            <ChessGame />
           ) : (
             <GameWrapper game={game} userId={userId} />
           )}

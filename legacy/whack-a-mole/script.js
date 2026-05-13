@@ -13,6 +13,16 @@ let activeIndex = -1;
 let gameTimer = null;
 let spawnTimer = null;
 let running = false;
+let gameReported = false;
+
+function reportGameOver(finalScore) {
+  if (gameReported) {
+    return;
+  }
+
+  gameReported = true;
+  window.parent?.postMessage({ type: "GAME_OVER", score: finalScore }, "*");
+}
 
 function loadBest() {
   const best = Number(localStorage.getItem(bestKey));
@@ -50,10 +60,12 @@ function stopRound() {
     localStorage.setItem(bestKey, String(score));
     loadBest();
     statusEl.textContent = `Round over. New best score: ${score}.`;
+    reportGameOver(score);
     return;
   }
 
   statusEl.textContent = `Round over. You scored ${score}.`;
+  reportGameOver(score);
 }
 
 function startRound() {
@@ -64,6 +76,7 @@ function startRound() {
   score = 0;
   timeLeft = 30;
   running = true;
+  gameReported = false;
   startBtn.disabled = true;
   statusEl.textContent = "Hit the mole as fast as you can.";
   refreshHud();

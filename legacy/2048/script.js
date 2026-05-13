@@ -16,6 +16,16 @@ let won = false;
 let gameOver = false;
 let touchStartX = 0;
 let touchStartY = 0;
+let gameReported = false;
+
+function reportGameOver(finalScore) {
+  if (gameReported) {
+    return;
+  }
+
+  gameReported = true;
+  window.parent?.postMessage({ type: "GAME_OVER", score: finalScore }, "*");
+}
 
 function getBestScore() {
   const value = Number(localStorage.getItem(BEST_KEY));
@@ -275,6 +285,7 @@ function applyMove(direction) {
     gameOver = true;
     updateStatus("No moves left. Start a new game.");
     showOverlay("Game Over");
+    reportGameOver(score);
   }
 }
 
@@ -326,6 +337,7 @@ function startNewGame() {
   board = createEmptyBoard();
   won = false;
   gameOver = false;
+  gameReported = false;
   updateScore(0);
   bestEl.textContent = String(getBestScore());
   spawnTile();

@@ -9,6 +9,16 @@ let sequence = [];
 let playerIndex = 0;
 let acceptingInput = false;
 let level = 0;
+let gameReported = false;
+
+function reportGameOver(finalScore) {
+  if (gameReported) {
+    return;
+  }
+
+  gameReported = true;
+  window.parent?.postMessage({ type: "GAME_OVER", score: finalScore }, "*");
+}
 
 function loadBest() {
   const best = Number(localStorage.getItem(BEST_KEY));
@@ -57,6 +67,7 @@ function gameOver() {
   acceptingInput = false;
   updateBest();
   statusEl.textContent = `Wrong pad. Game over at level ${level}.`;
+  reportGameOver(level);
 }
 
 function onPadClick(index) {
@@ -83,6 +94,7 @@ function startGame() {
   sequence = [];
   playerIndex = 0;
   level = 0;
+  gameReported = false;
   levelEl.textContent = "0";
   statusEl.textContent = "Get ready.";
   setTimeout(nextRound, 350);

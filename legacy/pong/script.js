@@ -14,6 +14,16 @@ const keys = { up: false, down: false };
 let playerScore = 0;
 let cpuScore = 0;
 let running = false;
+let gameReported = false;
+
+function reportGameOver(finalScore) {
+  if (gameReported) {
+    return;
+  }
+
+  gameReported = true;
+  window.parent?.postMessage({ type: "GAME_OVER", score: finalScore }, "*");
+}
 
 function resetBall(direction = 1) {
   ball.x = canvas.width / 2;
@@ -25,6 +35,7 @@ function resetBall(direction = 1) {
 function resetMatch() {
   playerScore = 0;
   cpuScore = 0;
+  gameReported = false;
   playerScoreEl.textContent = "0";
   cpuScoreEl.textContent = "0";
   leftPaddle.y = canvas.height / 2 - paddle.height / 2;
@@ -94,6 +105,7 @@ function update() {
   if (playerScore >= 7 || cpuScore >= 7) {
     running = false;
     statusEl.textContent = playerScore > cpuScore ? "You won the match." : "CPU won the match.";
+    reportGameOver(playerScore);
   }
 }
 

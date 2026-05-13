@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { eq, desc, sql, and, gte } from "drizzle-orm";
 import { z } from "zod";
 import { auth } from "@/lib/auth";
-import { db, scores, games, users } from "@/lib/db";
+import { db, scores, games, users, isDatabaseConfigured } from "@/lib/db";
 
 const submitScoreSchema = z.object({
   gameSlug: z.string().min(1),
@@ -69,6 +69,10 @@ export async function POST(request: Request) {
 // GET /api/scores?game=snake&limit=50&period=all|week|today
 export async function GET(request: Request) {
   try {
+    if (!isDatabaseConfigured) {
+      return NextResponse.json({ leaderboard: [] });
+    }
+
     const { searchParams } = new URL(request.url);
     const gameSlug = searchParams.get("game");
     const limit = Math.min(parseInt(searchParams.get("limit") ?? "50"), 100);

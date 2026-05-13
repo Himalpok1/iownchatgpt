@@ -49,12 +49,12 @@ export default function EditorialPolicyPage() {
             </div>
             <div className="content-block">
               <h2>4. AI Use Disclosure</h2>
-              <p>We may use AI tools during drafting and ideation, but final publication is manually edited for clarity, factual consistency, and usefulness. We do not auto-publish unreviewed AI outputs.</p>
-              <p>Any article that cannot be validated against live behavior is either corrected or removed.</p>
+              <p>We use AI tools in two ways: to assist with drafting and to produce scheduled daily news roundups sourced from live web reporting. Those roundups are published automatically when the generation pipeline succeeds, and each one includes disclosure that it was assembled with AI assistance.</p>
+              <p>Automated publication does not remove human control. We maintain an internal admin workflow for corrections, updates, takedowns, and source inspection after publication.</p>
             </div>
             <div className="content-block">
               <h2>5. Corrections Policy</h2>
-              <p>If an article contains outdated instructions, incorrect claims, or confusing language, we correct it and update the &ldquo;Last updated&rdquo; date where meaningful. Material corrections are prioritized over cosmetic edits.</p>
+              <p>If an article contains outdated instructions, incorrect claims, confusing language, or a misleading summary of a cited source, we correct it and update the &ldquo;Last updated&rdquo; date where meaningful. Material corrections are prioritized over cosmetic edits.</p>
               <p>To report a content issue, send details to <a href="mailto:mailme@himal.info.np">mailme@himal.info.np</a> with page URL and a short explanation of the problem.</p>
             </div>
             <div className="content-block">
@@ -63,7 +63,8 @@ export default function EditorialPolicyPage() {
               <ul>
                 <li>No clickbait claims intended only to attract ad traffic.</li>
                 <li>No copied pages published solely for search ranking.</li>
-                <li>No auto-generated content published without human review.</li>
+                <li>No source-free AI output presented as reported news.</li>
+                <li>No automated article remains live if a material issue is found after publication.</li>
               </ul>
             </div>
             <div className="content-block">

@@ -16,6 +16,16 @@ let timerId = null;
 let seconds = 0;
 let hasStarted = false;
 const bestKey = "memory_match_best_time";
+let gameReported = false;
+
+function reportGameOver(finalScore) {
+  if (gameReported) {
+    return;
+  }
+
+  gameReported = true;
+  window.parent?.postMessage({ type: "GAME_OVER", score: finalScore }, "*");
+}
 
 function shuffledDeck() {
   const cards = [...symbols, ...symbols].map((symbol, index) => ({
@@ -121,6 +131,7 @@ function onCardClick(cardEl) {
     if (matches === symbols.length) {
       stopTimer();
       setStatus(`Completed in ${moves} moves and ${seconds}s.`);
+      reportGameOver(seconds);
       const currentBest = Number(localStorage.getItem(bestKey));
       if (!currentBest || seconds < currentBest) {
         localStorage.setItem(bestKey, String(seconds));
@@ -148,6 +159,7 @@ function initGame() {
   matches = 0;
   seconds = 0;
   hasStarted = false;
+  gameReported = false;
   firstCard = null;
   secondCard = null;
   lockBoard = false;

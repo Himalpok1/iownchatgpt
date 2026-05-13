@@ -21,6 +21,16 @@ let lives = 3;
 let running = false;
 let leftPressed = false;
 let rightPressed = false;
+let gameReported = false;
+
+function reportGameOver(finalScore) {
+  if (gameReported) {
+    return;
+  }
+
+  gameReported = true;
+  window.parent?.postMessage({ type: "GAME_OVER", score: finalScore }, "*");
+}
 
 function createBricks() {
   bricks = [];
@@ -44,6 +54,7 @@ function resetBallAndPaddle() {
 function resetGame() {
   score = 0;
   lives = 3;
+  gameReported = false;
   scoreEl.textContent = "0";
   livesEl.textContent = "3";
   createBricks();
@@ -146,6 +157,7 @@ function update() {
     if (lives <= 0) {
       running = false;
       statusEl.textContent = `Game over. Final score: ${score}.`;
+      reportGameOver(score);
       return;
     }
     resetBallAndPaddle();
@@ -154,6 +166,7 @@ function update() {
   if (remainingBricks() === 0) {
     running = false;
     statusEl.textContent = `You cleared the board. Score: ${score}.`;
+    reportGameOver(score);
   }
 }
 

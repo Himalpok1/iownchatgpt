@@ -9,11 +9,7 @@ import Piece from "./Piece";
 import CapturedPieces from "./CapturedPieces";
 import type { AiResponse, GameStatus } from "./types";
 
-interface ChessGameProps {
-  userId?: string;
-}
-
-export function ChessGame({ userId: _userId }: ChessGameProps) {
+export function ChessGame() {
   const [game, setGame] = useState(() => new Chess());
   const [fen, setFen] = useState(() => new Chess().fen());
   const [orientation, setOrientation] = useState<Color>("w");
@@ -25,7 +21,6 @@ export function ChessGame({ userId: _userId }: ChessGameProps) {
   const [history, setHistory] = useState<string[]>([]);
   const [showStartup, setShowStartup] = useState(true);
 
-  const board = useMemo(() => game.board(), [fen]); // eslint-disable-line react-hooks/exhaustive-deps
   const turn = game.turn();
   const inCheck = game.inCheck();
   const isGameOver = game.isGameOver();
@@ -211,7 +206,7 @@ export function ChessGame({ userId: _userId }: ChessGameProps) {
         <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50 flex-1 relative overflow-auto max-h-48 lg:max-h-none">
           <div className="absolute top-3 right-3 text-slate-600"><Zap className="w-4 h-4" /></div>
           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">AI Commentary</h3>
-          <p className="text-sm text-slate-300 leading-relaxed italic">"{commentary}"</p>
+          <p className="text-sm text-slate-300 leading-relaxed italic">&ldquo;{commentary}&rdquo;</p>
         </div>
 
         <div className="space-y-3">

@@ -129,6 +129,139 @@ export const gameSessions = pgTable("game_sessions", {
   metadata: jsonb("metadata"),
 });
 
+// ===== Contact & Request Inbox =====
+export const inquiries = pgTable(
+  "inquiries",
+  {
+    id: serial("id").primaryKey(),
+    type: varchar("type", { length: 20 }).notNull(), // 'contact' | 'game_request'
+    name: varchar("name", { length: 100 }).notNull(),
+    email: varchar("email", { length: 255 }).notNull(),
+    subject: varchar("subject", { length: 200 }),
+    message: text("message").notNull(),
+    status: varchar("status", { length: 20 }).default("new").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (inquiry) => ({
+    typeCreatedIdx: index("inquiries_type_created_idx").on(
+      inquiry.type,
+      inquiry.createdAt
+    ),
+  })
+);
+
+// ===== Editorial / AI Newsroom =====
+export const editorialSettings = pgTable("editorial_settings", {
+  key: varchar("key", { length: 20 }).primaryKey().default("default"),
+  automationEnabled: boolean("automation_enabled").default(true).notNull(),
+  trackedTopics: jsonb("tracked_topics").default(["AI", "Tech", "Crypto", "Consumer Electronics"]).notNull(),
+  scheduleSlots: jsonb("schedule_slots")
+    .default([
+      { slot: "morning", hour: 8, minute: 0 },
+      { slot: "midday", hour: 13, minute: 0 },
+      { slot: "evening", hour: 19, minute: 0 },
+    ])
+    .notNull(),
+  maxSourcesPerRun: integer("max_sources_per_run").default(9).notNull(),
+  model: varchar("model", { length: 50 }).default("gemini-2.5-flash").notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const articleRuns = pgTable(
+  "article_runs",
+  {
+    id: serial("id").primaryKey(),
+    runKey: varchar("run_key", { length: 80 }).unique().notNull(),
+    slot: varchar("slot", { length: 20 }).notNull(),
+    status: varchar("status", { length: 20 }).default("pending").notNull(),
+    model: varchar("model", { length: 50 }),
+    sourceCount: integer("source_count").default(0).notNull(),
+    duplicateWarning: boolean("duplicate_warning").default(false).notNull(),
+    sourceSummary: jsonb("source_summary"),
+    errorMessage: text("error_message"),
+    publishOutcome: varchar("publish_outcome", { length: 30 }),
+    publishedSlug: varchar("published_slug", { length: 220 }),
+    triggeredBy: varchar("triggered_by", { length: 30 }).default("scheduler").notNull(),
+    startedAt: timestamp("started_at").defaultNow().notNull(),
+    completedAt: timestamp("completed_at"),
+  },
+  (run) => ({
+    slotStartedIdx: index("article_runs_slot_started_idx").on(run.slot, run.startedAt),
+  })
+);
+
+export const articles = pgTable(
+  "articles",
+  {
+    id: serial("id").primaryKey(),
+    slug: varchar("slug", { length: 220 }).unique().notNull(),
+    title: varchar("title", { length: 255 }).notNull(),
+    summary: text("summary").notNull(),
+    bodyHtml: text("body_html").notNull(),
+    status: varchar("status", { length: 20 }).default("published").notNull(),
+    articleType: varchar("article_type", { length: 30 }).default("daily-roundup").notNull(),
+    category: varchar("category", { length: 50 }).default("Daily Roundup").notNull(),
+    slot: varchar("slot", { length: 20 }).notNull(),
+    keywords: text("keywords"),
+    authorLabel: varchar("author_label", { length: 100 }).default("iownchatgpt News Desk").notNull(),
+    disclosure: text("disclosure").notNull(),
+    heroImageUrl: text("hero_image_url"),
+    seoTitle: varchar("seo_title", { length: 255 }),
+    seoDescription: text("seo_description"),
+    sourceCount: integer("source_count").default(0).notNull(),
+    duplicateWarning: boolean("duplicate_warning").default(false).notNull(),
+    runId: integer("run_id").references(() => articleRuns.id, { onDelete: "set null" }),
+    publishedAt: timestamp("published_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (article) => ({
+    publishedIdx: index("articles_published_idx").on(article.status, article.publishedAt),
+  })
+);
+
+export const articleSources = pgTable(
+  "article_sources",
+  {
+    id: serial("id").primaryKey(),
+    articleId: integer("article_id")
+      .notNull()
+      .references(() => articles.id, { onDelete: "cascade" }),
+    sourceUrl: text("source_url").notNull(),
+    sourceTitle: varchar("source_title", { length: 255 }).notNull(),
+    publisher: varchar("publisher", { length: 120 }),
+    publishedAt: timestamp("published_at"),
+    excerpt: text("excerpt"),
+    categoryTag: varchar("category_tag", { length: 40 }).notNull(),
+    rank: integer("rank").default(0).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (source) => ({
+    articleRankIdx: index("article_sources_article_rank_idx").on(source.articleId, source.rank),
+  })
+);
+
+export const articleReviews = pgTable(
+  "article_reviews",
+  {
+    id: serial("id").primaryKey(),
+    articleId: integer("article_id")
+      .notNull()
+      .references(() => articles.id, { onDelete: "cascade" }),
+    reviewerId: uuid("reviewer_id").references(() => users.id, { onDelete: "set null" }),
+    action: varchar("action", { length: 30 }).notNull(),
+    beforeStatus: varchar("before_status", { length: 20 }),
+    afterStatus: varchar("after_status", { length: 20 }),
+    notes: text("notes"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (review) => ({
+    articleCreatedIdx: index("article_reviews_article_created_idx").on(
+      review.articleId,
+      review.createdAt
+    ),
+  })
+);
+
 // ===== Multiplayer Rooms =====
 export const multiplayerRooms = pgTable("multiplayer_rooms", {
   id: varchar("id", { length: 8 }).primaryKey(), // short room code e.g. 'PONG-A3X7'
@@ -149,3 +282,15 @@ export type Score = typeof scores.$inferSelect;
 export type NewScore = typeof scores.$inferInsert;
 export type GameSession = typeof gameSessions.$inferSelect;
 export type NewGameSession = typeof gameSessions.$inferInsert;
+export type Inquiry = typeof inquiries.$inferSelect;
+export type NewInquiry = typeof inquiries.$inferInsert;
+export type EditorialSettings = typeof editorialSettings.$inferSelect;
+export type NewEditorialSettings = typeof editorialSettings.$inferInsert;
+export type ArticleRun = typeof articleRuns.$inferSelect;
+export type NewArticleRun = typeof articleRuns.$inferInsert;
+export type Article = typeof articles.$inferSelect;
+export type NewArticle = typeof articles.$inferInsert;
+export type ArticleSource = typeof articleSources.$inferSelect;
+export type NewArticleSource = typeof articleSources.$inferInsert;
+export type ArticleReview = typeof articleReviews.$inferSelect;
+export type NewArticleReview = typeof articleReviews.$inferInsert;

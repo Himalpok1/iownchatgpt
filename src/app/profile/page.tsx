@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
-import { db, scores, games, users } from "@/lib/db";
+import { db, scores, games } from "@/lib/db";
 import { eq, desc } from "drizzle-orm";
 
 export const metadata: Metadata = {

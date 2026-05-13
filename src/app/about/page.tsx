@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BookOpenText, Gamepad2, Globe, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About iownchatgpt",
@@ -20,122 +21,122 @@ export default function AboutPage() {
       </nav>
 
       <section className="content-section">
-        <div className="container">
-          <h1
-            className="text-3xl sm:text-4xl md:text-[48px] text-center mb-[var(--space-16)] gradient-text-section"
-            style={{ fontWeight: "var(--font-weight-bold)" }}
-          >
-            About iownchatgpt
-          </h1>
-          <p className="text-center text-[var(--font-size-xl)] text-[var(--color-gray-300)] mb-[var(--space-32)]">
-            Building practical, replayable browser games with useful player guides
-          </p>
-
-          <div className="max-w-[800px] mx-auto space-y-6">
-            <div className="content-block">
-              <h2>Our Mission</h2>
-              <p>
-                To revolutionize arcade gaming by leveraging artificial intelligence
-                to create innovative, engaging, and freely accessible games for
-                everyone.
+        <div className="container page-shell">
+          <div className="page-hero">
+            <div className="page-hero__header">
+              <div>
+                <p className="home-section__eyebrow">About</p>
+                <h1 className="page-hero__title">A browser arcade with a real editorial backbone.</h1>
+              </div>
+              <p className="page-hero__copy">
+                iownchatgpt started as a place for fast, replayable browser games and has grown
+                into a product that treats guides, support, and now the AI newsroom as first-class
+                parts of the experience.
               </p>
             </div>
 
-            <div className="content-block">
-              <h2>Our Vision</h2>
-              <p>
-                A world where everyone can enjoy high-quality browser games
-                instantly. We believe gaming should be accessible, free, and easy
-                to understand for all players.
-              </p>
-            </div>
-
-            <div className="content-block">
-              <h2>Our Story</h2>
-              <p>
-                iownchatgpt was founded to publish lightweight browser games people
-                can actually play and replay without downloads, account walls, or
-                complicated setup. We focus on clear controls, fast loading, and
-                simple match flow.
-              </p>
-              <p>
-                Beyond game pages, we maintain guide content that explains strategy,
-                host flow, and common mistakes. This turns the site into a usable
-                gaming resource rather than a collection of empty launch pages.
-              </p>
-            </div>
-
-            <div className="content-block">
-              <h2>Our Values</h2>
-              <ul>
-                <li>
-                  <strong>Clarity:</strong> We write instructions that are easy to
-                  apply during real gameplay
-                </li>
-                <li>
-                  <strong>Accessibility:</strong> Games should be free and available
-                  to everyone, everywhere
-                </li>
-                <li>
-                  <strong>Quality:</strong> We maintain high standards in all our
-                  creations
-                </li>
-                <li>
-                  <strong>Community:</strong> We listen to player feedback and
-                  suggestions
-                </li>
-              </ul>
-            </div>
-
-            <div className="content-block">
-              <h2>Why Choose iownchatgpt?</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-[var(--space-24)] mt-4">
-                {[
-                  {
-                    icon: "\uD83E\uDD16",
-                    title: "Original Game Builds",
-                    desc: "Every playable version is maintained directly on this site",
-                  },
-                  {
-                    icon: "\uD83C\uDF89",
-                    title: "Completely Free",
-                    desc: "No subscriptions, no payments, no hidden costs",
-                  },
-                  {
-                    icon: "\u26A1",
-                    title: "Instant Access",
-                    desc: "Play directly in your browser, no downloads required",
-                  },
-                  {
-                    icon: "\uD83D\uDCF1",
-                    title: "Cross-Platform",
-                    desc: "Works on desktop, tablet, and mobile devices",
-                  },
-                ].map((item) => (
-                  <div key={item.title} className="text-center p-4">
-                    <div className="text-[48px] mb-[var(--space-8)]">
-                      {item.icon}
-                    </div>
-                    <h3 className="text-white mb-[var(--space-4)]">
-                      {item.title}
-                    </h3>
-                    <p className="text-[var(--color-gray-300)] text-[var(--font-size-lg)]">
-                      {item.desc}
-                    </p>
-                  </div>
-                ))}
+            <div className="page-summary-grid">
+              <div className="surface-panel page-summary-card">
+                <p className="page-summary-card__label">Built for</p>
+                <div className="page-summary-card__value">
+                  <Gamepad2 size={18} className="text-[var(--color-cyan)]" />
+                  instant play sessions
+                </div>
+                <p className="page-summary-card__copy">
+                  No downloads, no heavy onboarding, and no account wall before the fun starts.
+                </p>
+              </div>
+              <div className="surface-panel page-summary-card">
+                <p className="page-summary-card__label">Editorial layer</p>
+                <div className="page-summary-card__value">
+                  <BookOpenText size={18} className="text-[var(--color-cyan)]" />
+                  guides plus live roundups
+                </div>
+                <p className="page-summary-card__copy">
+                  Strategy guides, policy pages, and current tech coverage all live inside one product.
+                </p>
+              </div>
+              <div className="surface-panel page-summary-card">
+                <p className="page-summary-card__label">Audience</p>
+                <div className="page-summary-card__value">
+                  <Globe size={18} className="text-[var(--color-cyan)]" />
+                  global, cross-device players
+                </div>
+                <p className="page-summary-card__copy">
+                  The site is designed to stay lightweight and readable across desktop and mobile.
+                </p>
               </div>
             </div>
+          </div>
 
-            <div className="content-block text-center">
-              <h2>Ready to Play?</h2>
-              <p>
-                Explore our collection of browser arcade games and use our guides
-                to improve quickly.
-              </p>
-              <Link href="/games" className="btn-gradient mt-4 inline-block">
-                Browse Games
-              </Link>
+          <div className="page-two-col">
+            <div className="guide-grid">
+              <article className="surface-panel guide-card">
+                <h2>Mission</h2>
+                <p>
+                  Build practical browser entertainment that people can return to easily, then
+                  support it with clear writing that makes the whole experience more useful.
+                </p>
+              </article>
+
+              <article className="surface-panel guide-card">
+                <h2>What the site is now</h2>
+                <p>
+                  The product has three working layers: playable games, player-help content, and a
+                  live editorial/newsroom system for AI, tech, crypto, and adjacent topics.
+                </p>
+                <p>
+                  That means the site is no longer just a collection of launch links. It is a
+                  maintained product with gameplay, rankings, support, policies, and publishing
+                  controls that all belong to the same system.
+                </p>
+              </article>
+
+              <article className="surface-panel guide-card">
+                <h2>Why this approach matters</h2>
+                <ul>
+                  <li>Games are fast to try and easy to replay.</li>
+                  <li>Guides explain the versions that actually live on this site.</li>
+                  <li>Support and policy pages are treated like product surfaces, not afterthoughts.</li>
+                  <li>The newsroom can publish current coverage without waiting for a redeploy.</li>
+                </ul>
+              </article>
+            </div>
+
+            <div className="home-stack">
+              <aside className="surface-panel home-list-card">
+                <h3>Values</h3>
+                <ul>
+                  <li>Clarity over filler.</li>
+                  <li>Accessibility over friction.</li>
+                  <li>Useful systems over flashy dead ends.</li>
+                  <li>Human correction paths wherever automation exists.</li>
+                </ul>
+              </aside>
+
+              <aside className="surface-panel home-list-card">
+                <h3>Operational standards</h3>
+                <p>
+                  Gameplay should feel responsive, pages should load cleanly, and editorial content
+                  should be understandable enough to trust or challenge.
+                </p>
+                <div className="mt-4 inline-flex items-center gap-2 text-[var(--color-cyan)]">
+                  <ShieldCheck size={16} />
+                  Policy and correction paths stay visible.
+                </div>
+              </aside>
+
+              <aside className="surface-panel home-list-card">
+                <h3>Jump in</h3>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <Link href="/games" className="btn-gradient">
+                    Browse Games
+                  </Link>
+                  <Link href="/blog" className="btn-secondary">
+                    Read the Blog
+                  </Link>
+                </div>
+              </aside>
             </div>
           </div>
         </div>

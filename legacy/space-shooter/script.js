@@ -18,6 +18,16 @@ let running = false;
 let lastShot = 0;
 let enemyFireTick = 0;
 const keys = { left: false, right: false, shoot: false };
+let gameReported = false;
+
+function reportGameOver(finalScore) {
+  if (gameReported) {
+    return;
+  }
+
+  gameReported = true;
+  window.parent?.postMessage({ type: "GAME_OVER", score: finalScore }, "*");
+}
 
 function createWave() {
   enemies = [];
@@ -47,6 +57,7 @@ function resetGame() {
   score = 0;
   lives = 3;
   level = 1;
+  gameReported = false;
   bullets = [];
   enemyBullets = [];
   player.x = canvas.width / 2 - player.w / 2;
@@ -150,6 +161,7 @@ function update(timestamp) {
       if (lives <= 0) {
         running = false;
         statusEl.textContent = `Game over. Final score: ${score}.`;
+        reportGameOver(score);
       }
     }
   });
@@ -158,6 +170,7 @@ function update(timestamp) {
   if (reachedBottom) {
     running = false;
     statusEl.textContent = `Enemies reached your base. Final score: ${score}.`;
+    reportGameOver(score);
   }
 
   if (enemies.every((enemy) => !enemy.alive)) {

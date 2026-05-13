@@ -59,6 +59,7 @@ function gameOver() {
   clearInterval(timerId);
   timerId = null;
   updateBest();
+  window.parent?.postMessage({ type: "GAME_OVER", score }, "*");
   statusEl.textContent = `Game over. Score: ${score}. Press Start / Restart.`;
 }
 

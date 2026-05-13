@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Clock3, Globe, Mail, MessageSquareText, ShieldCheck } from "lucide-react";
+import { InquiryForm } from "@/components/forms/InquiryForm";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -19,135 +21,126 @@ export default function ContactPage() {
       </nav>
 
       <section className="content-section">
-        <div className="container">
-          <h1
-            className="text-3xl sm:text-4xl md:text-[48px] text-center mb-[var(--space-16)] gradient-text-section"
-            style={{ fontWeight: "var(--font-weight-bold)" }}
-          >
-            Contact Us
-          </h1>
-          <p className="text-center text-[var(--font-size-xl)] text-[var(--color-gray-300)] mb-[var(--space-32)]">
-            Get in touch with us. We&apos;d love to hear from you!
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-32)] max-w-[900px] mx-auto">
-            <div className="content-block">
-              <h2>Send us a Message</h2>
-              <form className="flex flex-col gap-[var(--space-16)]">
-                <div>
-                  <label className="block text-[var(--color-gray-300)] mb-[var(--space-8)] text-[var(--font-size-lg)]">
-                    Name *
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Your Name"
-                    className="form-input"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-[var(--color-gray-300)] mb-[var(--space-8)] text-[var(--font-size-lg)]">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="your.email@example.com"
-                    className="form-input"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-[var(--color-gray-300)] mb-[var(--space-8)] text-[var(--font-size-lg)]">
-                    Subject *
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="What is this about?"
-                    className="form-input"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-[var(--color-gray-300)] mb-[var(--space-8)] text-[var(--font-size-lg)]">
-                    Message *
-                  </label>
-                  <textarea
-                    placeholder="Tell us more..."
-                    className="form-input min-h-[150px] resize-y"
-                    rows={6}
-                    required
-                  />
-                </div>
-                <button type="submit" className="btn-gradient">
-                  Send Message
-                </button>
-              </form>
+        <div className="container page-shell">
+          <div className="page-hero">
+            <div className="page-hero__header">
+              <div>
+                <p className="home-section__eyebrow">Contact</p>
+                <h1 className="page-hero__title">A direct way to reach the people behind the site.</h1>
+              </div>
+              <p className="page-hero__copy">
+                Use the form for support, feedback, partnership notes, or product suggestions. It
+                saves directly into the app backend, so it is much better than the old mailto flow.
+              </p>
             </div>
 
-            <div className="content-block">
-              <h2>Contact Information</h2>
+            <div className="page-summary-grid">
+              <div className="surface-panel page-summary-card">
+                <p className="page-summary-card__label">Best for</p>
+                <div className="page-summary-card__value">
+                  <MessageSquareText size={18} className="text-[var(--color-cyan)]" />
+                  support, feedback, requests
+                </div>
+                <p className="page-summary-card__copy">
+                  Report a problem, ask a question, or suggest a game or feature.
+                </p>
+              </div>
+              <div className="surface-panel page-summary-card">
+                <p className="page-summary-card__label">Response time</p>
+                <div className="page-summary-card__value">
+                  <Clock3 size={18} className="text-[var(--color-cyan)]" />
+                  usually within 24 to 48 hours
+                </div>
+                <p className="page-summary-card__copy">
+                  Enough time to respond thoughtfully without leaving requests hanging.
+                </p>
+              </div>
+              <div className="surface-panel page-summary-card">
+                <p className="page-summary-card__label">Routing</p>
+                <div className="page-summary-card__value">
+                  <ShieldCheck size={18} className="text-[var(--color-cyan)]" />
+                  stored in the app inbox
+                </div>
+                <p className="page-summary-card__copy">
+                  Messages are captured server-side so they do not get lost in a local mail client.
+                </p>
+              </div>
+            </div>
+          </div>
 
-              <div className="space-y-6 mt-4">
-                <div className="flex gap-4 items-start">
-                  <span className="text-[32px]">{"\uD83D\uDCE7"}</span>
-                  <div>
-                    <h3 className="text-white mb-1">Email</h3>
-                    <p>
-                      <a
-                        href="mailto:mailme@himal.info.np"
-                        className="text-[var(--color-cyan)]"
-                      >
+          <div className="page-two-col">
+            <div className="surface-panel guide-card">
+              <h2>Send a message</h2>
+              <p className="mb-5 text-[var(--color-gray-200)]">
+                The more specific your note is, the easier it is for us to fix, plan, or follow
+                up on quickly.
+              </p>
+              <InquiryForm type="contact" />
+            </div>
+
+            <div className="home-stack">
+              <div className="surface-panel home-list-card">
+                <h3>Direct contact</h3>
+                <div className="grid gap-4 mt-4">
+                  <div className="flex gap-4 items-start">
+                    <div className="game-card__emoji">
+                      <Mail size={18} />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-[var(--font-weight-semibold)] mb-1">Email</h4>
+                      <a href="mailto:mailme@himal.info.np" className="text-[var(--color-cyan)]">
                         mailme@himal.info.np
                       </a>
-                    </p>
+                    </div>
                   </div>
-                </div>
 
-                <div className="flex gap-4 items-start">
-                  <span className="text-[32px]">{"\uD83C\uDF10"}</span>
-                  <div>
-                    <h3 className="text-white mb-1">Website</h3>
-                    <p>
-                      <a
-                        href="https://iownchatgpt.com"
-                        className="text-[var(--color-cyan)]"
-                      >
+                  <div className="flex gap-4 items-start">
+                    <div className="game-card__emoji">
+                      <Globe size={18} />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-[var(--font-weight-semibold)] mb-1">Website</h4>
+                      <a href="https://iownchatgpt.com" className="text-[var(--color-cyan)]">
                         iownchatgpt.com
                       </a>
-                    </p>
+                    </div>
                   </div>
                 </div>
+              </div>
 
-                <div className="flex gap-4 items-start">
-                  <span className="text-[32px]">{"\u23F0"}</span>
-                  <div>
-                    <h3 className="text-white mb-1">Response Time</h3>
-                    <p className="text-[var(--color-gray-300)]">
-                      We typically respond within 24-48 hours
-                    </p>
-                  </div>
-                </div>
+              <div className="surface-panel home-list-card">
+                <h3>Useful links</h3>
+                <ul>
+                  <li>
+                    <Link href="/guides" className="text-[var(--color-cyan)]">
+                      Read the game guides
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/leaderboards" className="text-[var(--color-cyan)]">
+                      Check the live leaderboards
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/terms" className="text-[var(--color-cyan)]">
+                      Terms of use
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/disclaimer" className="text-[var(--color-cyan)]">
+                      Disclaimer
+                    </Link>
+                  </li>
+                </ul>
+              </div>
 
-                <div className="mt-8 p-4 rounded-xl" style={{ background: "rgba(14, 165, 233, 0.08)", border: "1px solid rgba(14, 165, 233, 0.2)" }}>
-                  <h3 className="text-white mb-3">Support Links</h3>
-                  <ul className="list-none space-y-2">
-                    <li>
-                      <Link href="/guides" className="text-[var(--color-cyan)]">
-                        Read Game Guides
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/terms" className="text-[var(--color-cyan)]">
-                        Terms of Use
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/disclaimer" className="text-[var(--color-cyan)]">
-                        Disclaimer
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
+              <div className="surface-panel home-list-card">
+                <h3>What helps us answer faster</h3>
+                <ul>
+                  <li>Name the game, page, or feature you are talking about.</li>
+                  <li>Explain what happened and what you expected to happen instead.</li>
+                  <li>Include enough detail that we can reproduce the issue on our side.</li>
+                </ul>
               </div>
             </div>
           </div>
