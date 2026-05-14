@@ -14,20 +14,28 @@ const navLinks = [
   { href: "/contact", label: "Contact Us" },
 ];
 
-export function Navbar() {
+const adminLinks = [
+  { href: "/admin/blog", label: "Newsroom" },
+  { href: "/blog", label: "Public Blog" },
+];
+
+export function Navbar({ adminHost = false }: { adminHost?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const links = adminHost ? adminLinks : navLinks;
+  const brandHref = adminHost ? "/admin/blog" : "/";
+  const brandLabel = adminHost ? "iownchatgpt admin" : "iownchatgpt";
 
   return (
     <nav className="site-nav">
       <div className="container site-nav__inner">
-        <Link href="/" className="site-brand">
+        <Link href={brandHref} className="site-brand">
           <span className="site-brand__mark" aria-hidden="true" />
-          <span>iownchatgpt</span>
+          <span>{brandLabel}</span>
         </Link>
 
         <div className="site-nav__desktop hidden md:flex items-center gap-[var(--space-32)]">
           <ul className="site-nav__links">
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <li key={link.href}>
                 <Link href={link.href}>
                   {link.label}
@@ -35,7 +43,7 @@ export function Navbar() {
               </li>
             ))}
           </ul>
-          <UserMenu />
+          <UserMenu adminHost={adminHost} />
         </div>
 
         <button
@@ -51,7 +59,7 @@ export function Navbar() {
         <div className="md:hidden border-t border-[rgba(148,163,184,0.12)] bg-[rgba(8,17,31,0.96)]">
           <div className="container py-3">
             <ul className="list-none flex flex-col">
-              {navLinks.map((link) => (
+              {links.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -66,7 +74,7 @@ export function Navbar() {
           </div>
           <div className="container pb-4">
             <div className="rounded-[var(--radius-base)] border border-[rgba(148,163,184,0.12)] bg-[rgba(255,255,255,0.03)] px-3 py-3">
-              <UserMenu />
+              <UserMenu adminHost={adminHost} />
             </div>
           </div>
         </div>

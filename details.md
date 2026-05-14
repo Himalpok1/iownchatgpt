@@ -7,6 +7,12 @@
 
 ## Work Log
 
+### 2026-05-13 18:44:30 CDT — Overlap and hidden-element UI fixes verified
+- Files changed: `src/app/globals.css`, `src/app/auth/login/page.tsx`, `src/app/auth/register/page.tsx`, `eslint.config.mjs`, `details.md`
+- What changed: Added a shared nav-height-driven page offset, created dedicated auth page shell classes, reduced the homepage hero heading scale, increased section spacing, strengthened game-card sizing and copy rhythm, and excluded `.hostinger-deploy/**` from ESLint so source linting stays focused on real app code instead of generated deployment artifacts.
+- Verification: `npm run lint` passed after the new ignore; `npm run build` passed and generated 83 routes; Computer Use checked `http://127.0.0.1:3000/auth/login`, `/`, and `/games` in Chrome and confirmed the login title is no longer clipped under the fixed nav, the homepage hero no longer crowds the next section, and the Games grid cards render with clearer spacing and no visible overlap.
+- Follow-up: Carry the same spacing audit through the remaining utility pages if any new screenshots surface, then push the visual refinements to production.
+
 ### 2026-05-13 16:23:40 CDT — Hostinger GitHub deployment completed
 - Files changed: `details.md`
 - What changed: Corrected the local git remote to `Himalpok1/iownchatgpt`, committed the current newsroom/UI/deployment work, pushed `main` to GitHub, connected the new Hostinger Node.js app to the GitHub repo, added the production environment variables in Hostinger, and completed the first live deployment for `iownchatgpt.com`.
@@ -511,3 +517,38 @@ GEMINI_API_KEY=        # Google AI Studio — for Chess vs Gemini
     - Did not find an existing Node.js app deployment target in the accessible FTP paths
 - Remaining follow-up:
   - Provision or expose a Hostinger Node.js app target before attempting live deployment of this Next.js app
+
+### 2026-05-13 19:17:03 CDT — Firebase auth and admin-subdomain groundwork connected
+- Files changed:
+  - `.env.local`
+  - `src/lib/auth.ts`
+  - `src/app/layout.tsx`
+  - `src/components/layout/Navbar.tsx`
+  - `src/components/auth/UserMenu.tsx`
+  - `src/components/auth/FirebaseGoogleButton.tsx`
+  - `src/app/auth/login/page.tsx`
+  - `src/app/auth/register/page.tsx`
+  - `src/lib/firebase/client.ts`
+  - `src/lib/hosts.ts`
+  - `src/types/next-auth.d.ts`
+  - `middleware.ts`
+  - `package.json`
+  - `package-lock.json`
+  - `details.md`
+- What changed:
+  - Created a new Firebase project for `iownchatgpt`, enabled Google as a Firebase Authentication provider, and registered a web app for the site.
+  - Added Firebase client configuration to local env and switched the user-facing Google button over to Firebase popup sign-in.
+  - Extended app auth so Firebase logins are synced into the local `users` table and converted into the existing NextAuth session model.
+  - Added host-aware admin routing and shell behavior so `admin.iownchatgpt.com` can act as a dedicated newsroom/admin surface.
+  - Reworked Firebase token verification to use Google's Identity Toolkit lookup API, which avoids blocking the flow on a downloaded Admin SDK key file.
+- Verification performed:
+  - `npm run lint` — passed
+  - `npm run build` — passed
+  - Firebase console verification:
+    - Google provider enabled in Firebase Authentication
+    - Firebase web app `iownchatgpt-web` created
+    - Web config values captured into `.env.local`
+- Remaining follow-up:
+  - Add `iownchatgpt.com`, `admin.iownchatgpt.com`, and production preview domains to Firebase Authentication authorized domains
+  - Finish the Hostinger Node app creation flow for `admin.iownchatgpt.com`
+  - Push the Firebase/admin-subdomain changes to GitHub so Hostinger can deploy them

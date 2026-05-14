@@ -10,8 +10,10 @@ import { isAdminEmail } from "@/lib/admin";
 import { users, accounts, sessions, verificationTokens } from "@/lib/db/schema";
 
 const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
+  email: z.string().email().optional(),
+  password: z.string().min(8).optional(),
+  mode: z.enum(["password", "firebase"]).optional(),
+  firebaseToken: z.string().min(16).optional(),
 });
 
 const authSecret =
@@ -24,6 +26,90 @@ const authSecret =
 const googleAuthEnabled = Boolean(
   process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
 );
+
+type FirebaseIdentityLookupResponse = {
+  users?: Array<{
+    localId: string;
+    email?: string;
+    displayName?: string;
+    photoUrl?: string;
+    emailVerified?: boolean;
+  }>;
+};
+
+async function lookupFirebaseUser(firebaseToken: string) {
+  const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
+
+  if (!apiKey) {
+    return null;
+  }
+
+  const response = await fetch(
+    `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${apiKey}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ idToken: firebaseToken }),
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    return null;
+  }
+
+  const payload = (await response.json()) as FirebaseIdentityLookupResponse;
+  return payload.users?.[0] ?? null;
+}
+
+async function syncFirebaseUser(firebaseToken: string) {
+  const firebaseProfile = await lookupFirebaseUser(firebaseToken);
+
+  if (!firebaseProfile) {
+    return null;
+  }
+
+  const email = firebaseProfile.email?.toLowerCase();
+
+  if (!email) {
+    return null;
+  }
+
+  const existingUser = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
+
+  const profilePayload = {
+    name: firebaseProfile.displayName ?? firebaseProfile.email ?? null,
+    image: firebaseProfile.photoUrl ?? null,
+    avatarUrl: firebaseProfile.photoUrl ?? null,
+    provider: "firebase",
+    providerId: firebaseProfile.localId,
+    emailVerified: firebaseProfile.emailVerified ? new Date() : null,
+  } as const;
+
+  if (existingUser[0]) {
+    const [updatedUser] = await db
+      .update(users)
+      .set(profilePayload)
+      .where(eq(users.id, existingUser[0].id))
+      .returning();
+
+    return updatedUser;
+  }
+
+  const [createdUser] = await db
+    .insert(users)
+    .values({
+      email,
+      ...profilePayload,
+    })
+    .returning();
+
+  return createdUser;
+}
 
 const providers = [
   ...(googleAuthEnabled
@@ -39,12 +125,31 @@ const providers = [
     credentials: {
       email: { label: "Email", type: "email" },
       password: { label: "Password", type: "password" },
+      mode: { label: "Mode", type: "text" },
+      firebaseToken: { label: "Firebase Token", type: "text" },
     },
     async authorize(credentials) {
       const parsed = loginSchema.safeParse(credentials);
       if (!parsed.success) return null;
 
-      const { email, password } = parsed.data;
+      const { email, password, mode, firebaseToken } = parsed.data;
+
+      if (mode === "firebase" && firebaseToken) {
+        const firebaseUser = await syncFirebaseUser(firebaseToken);
+
+        if (!firebaseUser) return null;
+
+        return {
+          id: firebaseUser.id,
+          email: firebaseUser.email,
+          name: firebaseUser.username ?? firebaseUser.name ?? firebaseUser.email,
+          image: firebaseUser.avatarUrl ?? firebaseUser.image,
+        };
+      }
+
+      if (!email || !password) {
+        return null;
+      }
 
       const user = await db
         .select()

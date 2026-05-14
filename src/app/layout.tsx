@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import Script from "next/script";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { AuthProvider } from "@/components/auth/AuthProvider";
+import { isAdminHost } from "@/lib/hosts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -42,11 +44,14 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerStore = await headers();
+  const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
+  const adminHost = isAdminHost(host);
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -95,9 +100,9 @@ export default function RootLayout({
       </head>
       <body className="flex flex-col min-h-screen">
         <AuthProvider>
-          <Navbar />
+          <Navbar adminHost={adminHost} />
           <main className="flex-1">{children}</main>
-          <Footer />
+          {adminHost ? null : <Footer />}
         </AuthProvider>
 
         {/* Google Analytics GA4 */}

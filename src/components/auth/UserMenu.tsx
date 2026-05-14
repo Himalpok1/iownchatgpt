@@ -3,8 +3,13 @@
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import { getPublicSiteUrl } from "@/lib/hosts";
 
-export function UserMenu() {
+export function UserMenu({
+  adminHost = false,
+}: {
+  adminHost?: boolean;
+}) {
   const { data: session, status } = useSession();
   const [open, setOpen] = useState(false);
 
@@ -24,13 +29,15 @@ export function UserMenu() {
         >
           Log in
         </Link>
-        <Link
-          href="/auth/register"
-          className="btn-gradient text-sm px-4 py-2 no-underline"
-          style={{ padding: "6px 16px", fontSize: "var(--font-size-lg)" }}
-        >
-          Sign up
-        </Link>
+        {!adminHost ? (
+          <Link
+            href="/auth/register"
+            className="btn-gradient text-sm px-4 py-2 no-underline"
+            style={{ padding: "6px 16px", fontSize: "var(--font-size-lg)" }}
+          >
+            Sign up
+          </Link>
+        ) : null}
       </div>
     );
   }
@@ -91,6 +98,15 @@ export function UserMenu() {
             >
               Admin Newsroom
             </Link>
+          ) : null}
+          {adminHost && session.user?.isAdmin ? (
+            <a
+              href={getPublicSiteUrl()}
+              className="block px-4 py-2 text-[var(--color-gray-300)] hover:text-[var(--color-cyan)] transition-colors text-[var(--font-size-lg)] no-underline"
+              onClick={() => setOpen(false)}
+            >
+              Public Site
+            </a>
           ) : null}
           <div className="border-t border-[rgba(125,211,252,0.1)] my-1" />
           <button

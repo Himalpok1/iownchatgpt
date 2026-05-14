@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  --nav-height: 72px;
   --color-white: #ffffff;
   --color-black: #000000;
   --color-gray-50: #f8fafc;
@@ -312,7 +313,7 @@ svg {
 
 .content-section {
   min-height: calc(100vh - 320px);
-  padding: 16px 0 var(--space-80);
+  padding: 28px 0 var(--space-80);
 }
 
 .content-block {
@@ -386,7 +387,7 @@ svg {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  min-height: 72px;
+  min-height: var(--nav-height);
 }
 
 .site-brand {
@@ -473,17 +474,17 @@ svg {
 }
 
 .home-page {
-  padding-top: 72px;
+  padding-top: var(--nav-height);
 }
 
 .home-hero {
-  padding: 40px 0 48px;
+  padding: 52px 0 72px;
 }
 
 .home-hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.9fr);
-  gap: 28px;
+  grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+  gap: 32px;
   align-items: stretch;
 }
 
@@ -507,17 +508,17 @@ svg {
 }
 
 .home-hero h1 {
-  max-width: 12ch;
-  margin-bottom: 18px;
+  max-width: 10ch;
+  margin-bottom: 20px;
   color: var(--color-white);
-  font-size: clamp(2.6rem, 7vw, 5rem);
-  line-height: 0.98;
+  font-size: clamp(2.9rem, 5.8vw, 4.5rem);
+  line-height: 1.01;
   letter-spacing: 0;
 }
 
 .home-hero__lede {
-  max-width: 56ch;
-  margin-bottom: 24px;
+  max-width: 52ch;
+  margin-bottom: 28px;
   color: var(--color-gray-200);
   font-size: clamp(1.02rem, 2.1vw, 1.16rem);
 }
@@ -532,7 +533,7 @@ svg {
 .home-hero__stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: 14px;
 }
 
 .home-stat {
@@ -610,15 +611,15 @@ svg {
 }
 
 .home-section {
-  padding: 72px 0;
+  padding: 80px 0;
 }
 
 .home-section__header {
   display: flex;
-  align-items: end;
+  align-items: start;
   justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 28px;
+  gap: 24px;
+  margin-bottom: 32px;
 }
 
 .home-section__eyebrow {
@@ -631,14 +632,14 @@ svg {
 }
 
 .home-section__title {
-  max-width: 16ch;
+  max-width: 13ch;
   color: var(--color-white);
-  font-size: clamp(2rem, 4.5vw, 3rem);
-  line-height: 1.04;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  line-height: 1.06;
 }
 
 .home-section__copy {
-  max-width: 58ch;
+  max-width: 54ch;
   color: var(--color-gray-200);
   font-size: 1rem;
 }
@@ -653,7 +654,7 @@ svg {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  min-height: 100%;
+  min-height: 272px;
   padding: 20px;
 }
 
@@ -678,11 +679,13 @@ svg {
   color: var(--color-white);
   font-size: 1.08rem;
   font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
 }
 
 .game-card__copy {
   color: var(--color-gray-300);
   font-size: 0.96rem;
+  line-height: 1.55;
 }
 
 .game-card__footer {
@@ -802,10 +805,10 @@ svg {
 }
 
 .page-hero__title {
-  max-width: 14ch;
+  max-width: 12ch;
   color: var(--color-white);
-  font-size: clamp(2.2rem, 5vw, 3.75rem);
-  line-height: 0.98;
+  font-size: clamp(2.2rem, 4.6vw, 3.35rem);
+  line-height: 1.02;
 }
 
 .page-hero__copy {
@@ -943,7 +946,24 @@ svg {
 .page-two-col {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-  gap: 18px;
+  gap: 24px;
+  align-items: start;
+}
+
+.auth-page {
+  min-height: 100vh;
+  padding: calc(var(--nav-height) + 36px) 16px 48px;
+}
+
+.auth-page__layout {
+  align-items: start;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  justify-self: end;
 }
 
 .guide-grid {
@@ -1115,7 +1135,7 @@ svg {
   .home-section,
   .section-dark,
   .section-darker {
-    padding: 56px 0;
+    padding: 60px 0;
   }
 
   .home-hero__grid,
@@ -1147,28 +1167,41 @@ svg {
     grid-template-columns: 1fr;
     padding-top: 40px;
   }
+
+  .auth-card {
+    max-width: none;
+    justify-self: stretch;
+  }
 }
 
 @media (max-width: 640px) {
+  :root {
+    --nav-height: 64px;
+  }
+
   .container {
     width: min(100% - 20px, 1180px);
   }
 
   .site-nav__inner {
-    min-height: 64px;
+    min-height: var(--nav-height);
   }
 
   .home-page {
-    padding-top: 64px;
+    padding-top: var(--nav-height);
   }
 
   .home-hero {
-    padding-top: 24px;
+    padding-top: 28px;
   }
 
   .home-hero h1,
   .home-section__title {
     max-width: none;
+  }
+
+  .home-hero h1 {
+    font-size: clamp(2.5rem, 12vw, 3.6rem);
   }
 
   .content-block,
@@ -1194,5 +1227,18 @@ svg {
 
   .breadcrumb-nav {
     padding-top: 84px;
+  }
+
+  .content-section {
+    padding-top: 20px;
+  }
+
+  .auth-page {
+    padding-top: calc(var(--nav-height) + 28px);
+    padding-bottom: 32px;
+  }
+
+  .auth-card {
+    padding: 22px;
   }
 }
