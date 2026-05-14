@@ -552,3 +552,19 @@ GEMINI_API_KEY=        # Google AI Studio — for Chess vs Gemini
   - Add `iownchatgpt.com`, `admin.iownchatgpt.com`, and production preview domains to Firebase Authentication authorized domains
   - Finish the Hostinger Node app creation flow for `admin.iownchatgpt.com`
   - Push the Firebase/admin-subdomain changes to GitHub so Hostinger can deploy them
+
+### 2026-05-13 19:24:30 CDT — GitHub updated and Hostinger subdomain created
+- Files changed:
+  - `details.md`
+- What changed:
+  - Pushed commit `3d5d1cd` (`Add Firebase Google auth and admin host routing`) to `origin/main`.
+  - Created the `admin.iownchatgpt.com` subdomain inside Hostinger.
+  - Confirmed the main `iownchatgpt.com` Node.js app deployment picked up the GitHub update successfully.
+- Verification performed:
+  - `git push origin main` — passed
+  - Hostinger deployment view shows latest deployed commit `3d5d1cd`
+  - `curl -I https://iownchatgpt.com/auth/login` returns `x-powered-by: Next.js`
+  - `curl -I https://admin.iownchatgpt.com` returns `200`, but currently serves Hostinger's default PHP page rather than the Next.js app
+- Remaining follow-up:
+  - Rebind `admin.iownchatgpt.com` to a Node.js/GitHub deployment target instead of the default static subdomain folder
+  - Add Firebase Authentication authorized domains for the production hostnames once the admin host binding is finalized
