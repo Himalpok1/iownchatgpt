@@ -568,3 +568,26 @@ GEMINI_API_KEY=        # Google AI Studio — for Chess vs Gemini
 - Remaining follow-up:
   - Rebind `admin.iownchatgpt.com` to a Node.js/GitHub deployment target instead of the default static subdomain folder
   - Add Firebase Authentication authorized domains for the production hostnames once the admin host binding is finalized
+
+### 2026-05-14 12:47:37 CDT — Admin subdomain recreated as an independent Node.js site
+- Files changed:
+  - `details.md`
+- What changed:
+  - Deleted the old `admin.iownchatgpt.com` file-based subdomain entry under `iownchatgpt.com` in Hostinger after confirming it was the blocker.
+  - Recreated `admin.iownchatgpt.com` through Hostinger's Node.js onboarding as an independent website.
+  - Reconnected the new admin site to the `Himalpok1/iownchatgpt` GitHub repository on the `main` branch with the Next.js preset.
+  - Imported a deployment-specific environment bundle for the admin host, including database access, auth secrets, Firebase public config, admin emails, and editorial cron secret.
+  - Triggered the first deployment for the new admin site and removed the temporary local env import file after Hostinger accepted the values.
+- Verification performed:
+  - Hostinger Node.js onboarding accepted `admin.iownchatgpt.com` once the old subdomain entry was removed.
+  - Hostinger build settings resolved to:
+    - framework preset: `Next.js`
+    - branch: `main`
+    - node version: `22.x`
+    - environment variables: `16` imported
+  - `curl -I https://admin.iownchatgpt.com` now returns `307` with `location: /admin/blog` instead of the old PHP response.
+  - `curl -I https://admin.iownchatgpt.com/admin/blog` returns `307` to `/auth/login` with `x-powered-by: Next.js`, confirming the admin site is now running the app and protecting the admin route.
+- Remaining follow-up:
+  - Confirm the Hostinger deployment job reaches a completed state in hPanel.
+  - Add `admin.iownchatgpt.com` and `iownchatgpt.com` to Firebase Authentication authorized domains if they are not already present.
+  - Sign in through the live admin host and verify `/admin/blog` loads for the admin account.
