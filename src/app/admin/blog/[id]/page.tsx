@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { desc, eq } from "drizzle-orm";
-import { requireAdminSession } from "@/lib/admin";
+import { redirect } from "next/navigation";
+import { getAdminSessionState } from "@/lib/admin";
 import { db, articleReviews, articleSources, articles } from "@/lib/db";
+import { AdminAccessDenied } from "@/components/admin/AdminAccessDenied";
 import { EditorialArticleEditor } from "@/components/admin/EditorialArticleEditor";
 
 export const metadata: Metadata = {
@@ -14,7 +16,16 @@ export default async function AdminBlogArticlePage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  await requireAdminSession();
+  const { session, isAuthenticated, isAdmin } = await getAdminSessionState();
+
+  if (!isAuthenticated) {
+    redirect("/auth/login");
+  }
+
+  if (!isAdmin) {
+    return <AdminAccessDenied email={session?.user?.email} />;
+  }
+
   const { id } = await params;
   const articleId = Number(id);
 

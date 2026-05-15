@@ -77,6 +77,11 @@ export async function getMergedBlogPosts(category?: string): Promise<BlogFeedPos
   });
 }
 
+export async function getMergedBlogPostCount() {
+  const generatedCount = (await getGeneratedBlogPosts()).length;
+  return blogPosts.length + generatedCount;
+}
+
 export async function getUsedSourceUrlsForToday(): Promise<string[]> {
   if (!isDatabaseConfigured) return [];
   try {

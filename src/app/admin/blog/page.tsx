@@ -1,17 +1,28 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { AlertCircle, CheckCircle2, Clock3, Newspaper } from "lucide-react";
-import { requireAdminSession } from "@/lib/admin";
+import { getAdminSessionState } from "@/lib/admin";
 import { getEditorialDashboardData } from "@/lib/editorial/service";
+import { AdminAccessDenied } from "@/components/admin/AdminAccessDenied";
 import { EditorialRunPanel } from "@/components/admin/EditorialRunPanel";
 import { EditorialSettingsForm } from "@/components/admin/EditorialSettingsForm";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Admin Newsroom",
 };
 
 export default async function AdminBlogPage() {
-  await requireAdminSession();
+  const { session, isAuthenticated, isAdmin } = await getAdminSessionState();
+
+  if (!isAuthenticated) {
+    redirect("/auth/login");
+  }
+
+  if (!isAdmin) {
+    return <AdminAccessDenied email={session?.user?.email} />;
+  }
+
   const dashboard = await getEditorialDashboardData();
 
   return (

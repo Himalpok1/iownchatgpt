@@ -625,3 +625,33 @@ GEMINI_API_KEY=        # Google AI Studio — for Chess vs Gemini
 - Remaining follow-up:
   - Re-check live routes after Hostinger edge propagation settles.
   - Continue with Firebase live sign-in, admin dashboard smoke tests, and cron setup once the public domains stop returning `503` from Hostinger's CDN/edge layer.
+
+### 2026-05-15 15:34:27 CDT — Fixed auth redirects, admin denial state, and homepage article count drift
+- Files changed:
+  - `src/app/auth/login/page.tsx`
+  - `src/app/auth/register/page.tsx`
+  - `src/components/auth/LoginView.tsx`
+  - `src/components/auth/RegisterView.tsx`
+  - `src/app/admin/blog/page.tsx`
+  - `src/app/admin/blog/[id]/page.tsx`
+  - `src/components/admin/AdminAccessDenied.tsx`
+  - `src/lib/admin.ts`
+  - `src/lib/editorial/articles.ts`
+  - `src/app/page.tsx`
+  - `details.md`
+- What changed:
+  - Moved the login and register UI into dedicated client components so the route pages can run `auth()` server-side before rendering.
+  - Added server-side redirects that send already-authenticated users away from `/auth/login` and `/auth/register` to `/profile` on the public site and `/admin/blog` on the admin host.
+  - Split admin authentication from authorization by adding a shared admin-session state helper instead of treating every admin-host miss as “please log in again”.
+  - Added a dedicated admin access-denied screen for signed-in accounts that do not have newsroom access, and used it on both `/admin/blog` and `/admin/blog/[id]`.
+  - Replaced the homepage’s hardcoded article count with a merged static-plus-generated count and set the homepage to revalidate every 15 minutes so the stat stays aligned with the live blog.
+- Verification performed:
+  - `npm run lint` — passed
+  - `npm run build` — passed
+  - Confirmed the production build now marks:
+    - `/` as static with `15m` revalidation
+    - `/auth/login` and `/auth/register` as dynamic auth-aware routes
+    - `/admin/blog` and `/admin/blog/[id]` as dynamic server-rendered admin routes
+- Remaining follow-up:
+  - Push and deploy these fixes so the live Hostinger site reflects the new auth/admin behavior.
+  - Re-run Chrome on the production domains after deployment to confirm the signed-in redirect, admin denial state, and homepage article count all behave correctly live.

@@ -17,10 +17,22 @@ export function isAdminEmail(email?: string | null) {
   return getAdminEmails().has(email.trim().toLowerCase());
 }
 
-export async function requireAdminSession() {
+export async function getAdminSessionState() {
   const session = await auth();
+  const email = session?.user?.email ?? null;
 
-  if (!session?.user?.email || !isAdminEmail(session.user.email)) {
+  return {
+    session,
+    email,
+    isAuthenticated: Boolean(email),
+    isAdmin: isAdminEmail(email),
+  };
+}
+
+export async function requireAdminSession() {
+  const { session, isAuthenticated, isAdmin } = await getAdminSessionState();
+
+  if (!isAuthenticated || !isAdmin) {
     redirect("/auth/login");
   }
 

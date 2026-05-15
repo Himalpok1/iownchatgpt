@@ -12,7 +12,10 @@ import {
   Trophy,
 } from "lucide-react";
 import { InquiryForm } from "@/components/forms/InquiryForm";
+import { getMergedBlogPostCount } from "@/lib/editorial/articles";
 import { games, comingSoonGames } from "@/lib/games";
+
+export const revalidate = 900;
 
 export const metadata: Metadata = {
   title: "iownchatgpt - Free Browser Games and Trending Tech Blog",
@@ -100,10 +103,12 @@ const trustNotes = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
   if (process.env.ADMIN_HOST_MODE === "true") {
     redirect("/admin/blog");
   }
+
+  const articleCount = await getMergedBlogPostCount();
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -154,7 +159,7 @@ export default function Home() {
                   <span>playable titles live now</span>
                 </div>
                 <div className="home-stat">
-                  <strong>20</strong>
+                  <strong>{articleCount}</strong>
                   <span>editorial articles published</span>
                 </div>
                 <div className="home-stat">
