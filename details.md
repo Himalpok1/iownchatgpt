@@ -607,3 +607,18 @@ GEMINI_API_KEY=        # Google AI Studio — for Chess vs Gemini
 - Remaining follow-up:
   - Add `ADMIN_HOST_MODE=false` to the main Hostinger deployment and `ADMIN_HOST_MODE=true` to the admin Hostinger deployment.
   - Redeploy both Hostinger apps and re-run live auth/admin QA on the production domains.
+
+### 2026-05-15 00:05:00 CDT — Replaced admin host middleware with app-level redirect
+- Files changed:
+  - `src/app/page.tsx`
+  - `middleware.ts`
+  - `details.md`
+- What changed:
+  - Moved the admin root redirect into the homepage server component using `redirect("/admin/blog")` when `ADMIN_HOST_MODE=true`.
+  - Removed the project-level middleware so Hostinger no longer has to execute host-based edge logic for every non-static route.
+  - Kept the admin/public shell split through deployment env vars instead of request-time routing decisions.
+- Verification performed:
+  - Pending local lint/build after patch application.
+- Remaining follow-up:
+  - Run `npm run lint` and `npm run build`.
+  - Redeploy both Hostinger apps and re-check live auth and admin routes.

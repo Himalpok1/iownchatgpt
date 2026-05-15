@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import {
   ArrowRight,
   BookOpenText,
@@ -100,6 +101,10 @@ const trustNotes = [
 ];
 
 export default function Home() {
+  if (process.env.ADMIN_HOST_MODE === "true") {
+    redirect("/admin/blog");
+  }
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
