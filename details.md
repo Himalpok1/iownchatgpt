@@ -618,7 +618,10 @@ GEMINI_API_KEY=        # Google AI Studio — for Chess vs Gemini
   - Removed the project-level middleware so Hostinger no longer has to execute host-based edge logic for every non-static route.
   - Kept the admin/public shell split through deployment env vars instead of request-time routing decisions.
 - Verification performed:
-  - Pending local lint/build after patch application.
+  - `npm run lint` — passed
+  - `npm run build` — passed
+  - Pushed commit `75623ff` (`Remove admin edge middleware`) to `main`.
+  - Hostinger detected and completed fresh deployments for both `iownchatgpt.com` and `admin.iownchatgpt.com`.
 - Remaining follow-up:
-  - Run `npm run lint` and `npm run build`.
-  - Redeploy both Hostinger apps and re-check live auth and admin routes.
+  - Re-check live routes after Hostinger edge propagation settles.
+  - Continue with Firebase live sign-in, admin dashboard smoke tests, and cron setup once the public domains stop returning `503` from Hostinger's CDN/edge layer.
