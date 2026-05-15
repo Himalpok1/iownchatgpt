@@ -591,3 +591,19 @@ GEMINI_API_KEY=        # Google AI Studio — for Chess vs Gemini
   - Confirm the Hostinger deployment job reaches a completed state in hPanel.
   - Add `admin.iownchatgpt.com` and `iownchatgpt.com` to Firebase Authentication authorized domains if they are not already present.
   - Sign in through the live admin host and verify `/admin/blog` loads for the admin account.
+
+### 2026-05-14 23:49:00 CDT — Replaced request-time host sniffing with deployment-mode layout selection
+- Files changed:
+  - `src/app/layout.tsx`
+  - `details.md`
+- What changed:
+  - Removed the root layout dependency on `headers()` and `x-forwarded-host` for admin/public shell selection.
+  - Switched the shell mode decision to a deployment-level `ADMIN_HOST_MODE` environment flag instead.
+  - This keeps the admin/public split intact across the two Hostinger deployments while avoiding request-time rendering for the public shell.
+- Verification performed:
+  - `npm run lint` — passed
+  - `npm run build` — passed
+  - Build output now prerenders the public pages again, including `/auth/login`, `/auth/register`, `/about`, `/contact`, `/games`, `/guides`, `/leaderboards`, `/privacy-policy`, and `/terms`.
+- Remaining follow-up:
+  - Add `ADMIN_HOST_MODE=false` to the main Hostinger deployment and `ADMIN_HOST_MODE=true` to the admin Hostinger deployment.
+  - Redeploy both Hostinger apps and re-run live auth/admin QA on the production domains.

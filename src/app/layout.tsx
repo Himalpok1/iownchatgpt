@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import Script from "next/script";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { AuthProvider } from "@/components/auth/AuthProvider";
-import { isAdminHost } from "@/lib/hosts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -49,9 +47,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headerStore = await headers();
-  const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
-  const adminHost = isAdminHost(host);
+  const adminHost = process.env.ADMIN_HOST_MODE === "true";
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
